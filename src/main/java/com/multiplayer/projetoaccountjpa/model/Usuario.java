@@ -27,15 +27,18 @@ public class Usuario {
 	@Column(nullable = false)
 	private String contas;
 	
+//	Default constructor
+	public Usuario () {
+		
+	}
+	
 	public Usuario(
-			Integer id, 
-			String nome, 
 			String cpf, 
+			String nome, 
 			String login, 
 			String senha,
 			String contas) {
 		
-		this.id = id;
 		this.nome = nome;
 		this.cpf= cpf;
 		this.login = login;
