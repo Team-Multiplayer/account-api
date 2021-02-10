@@ -1,10 +1,13 @@
 package com.multiplayer.projetoaccountjpa.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Usuario {
@@ -18,32 +21,30 @@ public class Usuario {
 	@Column(nullable = false)
 	private String cpf;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, unique=true)
 	private String login;
 	
 	@Column(nullable = false)
 	private String senha;
 	
-	@Column(nullable = false)
-	private String contas;
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "conta", referencedColumnName = "id")
+	private Conta conta;
 	
-//	Default constructor
-	public Usuario () {
-		
-	}
+	// Default constructor
+	public Usuario () {}
 	
 	public Usuario(
-			String cpf, 
 			String nome, 
+			String cpf, 
 			String login, 
-			String senha,
-			String contas) {
+			String senha) {
 		
 		this.nome = nome;
 		this.cpf= cpf;
 		this.login = login;
 		this.senha = senha;
-		this.contas = contas;
+		this.conta = new Conta(login);
 	};
 	
 	public Integer getId() {
@@ -86,12 +87,12 @@ public class Usuario {
 		this.senha = senha;
 	}
 	
-	public String getContas() {
-		return contas;
+	public Conta getContas() {
+		return conta;
 	}
 	
-	public void setContas(String contas) {
-		this.contas = contas;
+	public void setContas(Conta conta) {
+		this.conta = conta;
 	}
 	
 	

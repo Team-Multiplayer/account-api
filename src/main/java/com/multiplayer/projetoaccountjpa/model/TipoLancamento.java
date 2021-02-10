@@ -19,16 +19,11 @@ public class TipoLancamento {
 	@Column(nullable = false)
 	private String descricao;
 
-	public TipoLancamento() {
-		
-	}
+	// Default constructor
+	public TipoLancamento() {}
 	
 	public Integer getId() {
 		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public char getTipo() {

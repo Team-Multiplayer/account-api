@@ -10,7 +10,7 @@ import javax.persistence.Id;
 public class PlanoConta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idplano;
+	private Integer id;
 	
 	@Column(nullable = false)
 	private String contaReceitaDespesa;
@@ -18,31 +18,11 @@ public class PlanoConta {
 	@Column(nullable = false)
 	private String descricao;
 	
-	public PlanoConta() {
-		
-	}
+	// Default constructor
+	public PlanoConta() {}
 	
-	public void incluir() {
-		
-	}
-	
-	public void excuir() {
-		
-	}
-	
-	public void alterar() {
-		
-	}
-	
-	public void consultar() {
-		
-	}
-	
-	public Integer getIdplano() {
-		return idplano;
-	}
-	public void setIdplano(Integer idplano) {
-		this.idplano = idplano;
+	public Integer getId() {
+		return id;
 	}
 	public String getContaReceitaDespesa() {
 		return contaReceitaDespesa;

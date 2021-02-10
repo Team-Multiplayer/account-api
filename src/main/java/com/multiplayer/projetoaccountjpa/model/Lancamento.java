@@ -1,15 +1,14 @@
 package com.multiplayer.projetoaccountjpa.model;
 
-import java.util.Date;
-
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
 //@OneToMany(targetEntity=, mappedBy="", fetch=FetchType.EAGER)
+@Entity
 public class Lancamento {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +18,7 @@ public class Lancamento {
 	private String numeroConta;
 	
 	@Column(nullable = false)
-	private Date date;
+	private LocalDate data;
 	
 	@Column(nullable = false)
 	private Double valor;
@@ -27,7 +26,7 @@ public class Lancamento {
 	@Column(nullable = false)
 	private String descricao;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String contaDestino;
 	
 //	mudar tipagem
@@ -38,16 +37,11 @@ public class Lancamento {
 	@Column(nullable = false)
 	private String categoria;
 
-	public Lancamento() {
-		
-	};
+	// Default constructor
+	public Lancamento() {};
 	
 	public Integer getId() {
 		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getNumeroConta() {
@@ -58,12 +52,12 @@ public class Lancamento {
 		this.numeroConta = numeroConta;
 	}
 
-	public Date getDate() {
-		return date;
+	public LocalDate getData() {
+		return data;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setData(LocalDate data) {
+		this.data = data;
 	}
 
 	public Double getValor() {
