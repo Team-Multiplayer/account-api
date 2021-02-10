@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.multiplayer.projetoaccountjpa.model.Usuario;
-import com.multiplayer.projetoaccountjpa.repository.UsuarioRepository;
 import com.multiplayer.projetoaccountjpa.service.UsuarioService;
 
 @RestController
@@ -25,16 +24,16 @@ import com.multiplayer.projetoaccountjpa.service.UsuarioService;
 public class UsuarioController {
 
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private UsuarioService usuarioService;
 
 	@GetMapping
-	public List<Usuario> getAllUsers() {
-		return usuarioRepository.findAll();
+	public List<Usuario> getTodosUsuarios() {
+		return usuarioService.buscarTodos();
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Usuario> getUser(@PathVariable(value="id") Integer id) {
-		Optional<Usuario> usuario = usuarioRepository.findById(id);
+	public ResponseEntity<Usuario> getUsuario(@PathVariable(value="id") Integer id) {
+		Optional<Usuario> usuario = usuarioService.buscarPorId(id);
 
 		if (usuario.isPresent()) {
 			return ResponseEntity.ok().body(usuario.get());
@@ -46,26 +45,16 @@ public class UsuarioController {
 	
 	@PostMapping("/login")
 	@ResponseStatus(HttpStatus.ACCEPTED)
-	public Boolean loginUser(@Validated @RequestParam String login, @RequestParam String senha) {
-		 if(usuarioRepository.existsByLogin(login)) {
-			 return true;
-		 }
+	public Boolean loginUsuario(@Validated @RequestParam String login, @RequestParam String senha) {
 		 
-		 return false;
+		return usuarioService.validarLogin(login, senha);
 	}
 	
-
 	@PostMapping("/cadastrar")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Usuario createUser(@Validated @RequestBody Usuario usuario) throws Exception {
-		UsuarioService usuarioService = new UsuarioService();
+	public Usuario createUser(@Validated @RequestBody Usuario u) throws Exception {
 		
-		Boolean checkUsuario = usuarioService.validaUsuario(usuario);
-		if (checkUsuario) {
-			usuarioRepository.save(usuario);
-		}
-		
-		return usuario;
+		return usuarioService.cadastrarUsuario(u.getNome(), u.getCpf(), u.getLogin(), u.getSenha());
 	};
 
 }

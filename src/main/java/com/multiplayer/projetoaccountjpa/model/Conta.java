@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.multiplayer.projetoaccountjpa.enums.TipoConta;
+
 @Entity
 public class Conta {
 	@Id
@@ -16,17 +18,34 @@ public class Conta {
 	private String numero;
 	
 	@Column(nullable = false)
+	private TipoConta tipoConta;
+	
+	private Double saldo;
+
 	private Lancamento[] lancamentos;
 	
-	@Column(nullable = false)
-	private String tipoConta;
-
-	public Integer getId() {
-		return id;
+	// Default constructor
+	public Conta() {}
+	
+	public Conta(String numero) {
+		this.numero = numero;
+		this.tipoConta = TipoConta.CORRENTE;
+	}
+	
+	public void debitar(Double valor) {
+		this.saldo -= valor;
+	}
+	
+	public void creditar(Double valor) {
+		this.saldo += valor;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public Double getSaldo() {
+		return this.saldo;
+	}
+	
+	public Integer getId() {
+		return id;
 	}
 
 	public String getNumero() {
@@ -45,11 +64,11 @@ public class Conta {
 		this.lancamentos = lancamentos;
 	}
 
-	public String getTipoConta() {
+	public TipoConta getTipoConta() {
 		return tipoConta;
 	}
 
-	public void setTipoConta(String tipoConta) {
+	public void setTipoConta(TipoConta tipoConta) {
 		this.tipoConta = tipoConta;
 	}
 	
