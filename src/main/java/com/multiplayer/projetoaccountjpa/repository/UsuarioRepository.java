@@ -7,5 +7,5 @@ import com.multiplayer.projetoaccountjpa.model.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-
+	Boolean existsByLogin(String login);
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,8 +32,8 @@ public class UsuarioController {
 		return usuarioRepository.findAll();
 	}
 
-	@GetMapping("{/id}")
-	public ResponseEntity<Usuario> getUser(@PathVariable Integer id) {
+	@GetMapping("/{id}")
+	public ResponseEntity<Usuario> getUser(@PathVariable(value="id") Integer id) {
 		Optional<Usuario> usuario = usuarioRepository.findById(id);
 
 		if (usuario.isPresent()) {
@@ -42,14 +43,25 @@ public class UsuarioController {
 			return ResponseEntity.notFound().build();
 		}
 	}
+	
+	@PostMapping("/login")
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public Boolean loginUser(@Validated @RequestParam String login, @RequestParam String senha) {
+		 if(usuarioRepository.existsByLogin(login)) {
+			 return true;
+		 }
+		 
+		 return false;
+	}
+	
 
-	@PostMapping
+	@PostMapping("/cadastrar")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Usuario createUser(@Validated @RequestBody Usuario usuario) throws Exception {
 		UsuarioService usuarioService = new UsuarioService();
 		
-		Boolean checaUsuario = usuarioService.validaUsuario(usuario);
-		if (checaUsuario) {
+		Boolean checkUsuario = usuarioService.validaUsuario(usuario);
+		if (checkUsuario) {
 			usuarioRepository.save(usuario);
 		}
 		
