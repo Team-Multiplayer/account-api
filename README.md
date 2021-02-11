@@ -13,11 +13,11 @@ Código fonte no Github com o arquivo README detalhando as funcionalidades, clas
 
 # Detalhes do Projeto
 
-## Participação
+## Time Multiplayer
 - [Danilo Elias](https://github.com/danilose)
 - [Lucas Villarim](https://github.com/LucasVillarim)
-- Luciano
-- Mathias
+- [Luciano Faria](https://github.com/lucianofa)
+- [Mathias Ribeiro](https://github.com/ribeiromathias)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0NzQ1MDI0NzddfQ==
+eyJoaXN0b3J5IjpbMTIyMzk3MDg1NF19
 -->
