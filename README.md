@@ -24,7 +24,10 @@ Ajudou no desenvolvimento da modelagem e entendimento dos requisitos.
 Ajudou no desenvolvimento da modelagem. E está focado no desenvolvimento da parte web em HTML, CSS e JavaScript
 
 ## Estrutura do Projeto
-
+Dividimos as classes em pacotes de acordo com suas responsabilidades.
+- Model
+- Repository
+- Service
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIwOTU1ODg5MjhdfQ==
+eyJoaXN0b3J5IjpbLTkxMTY0MDQyNF19
 -->
