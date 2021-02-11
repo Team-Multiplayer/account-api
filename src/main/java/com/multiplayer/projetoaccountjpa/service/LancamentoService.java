@@ -10,13 +10,16 @@ import com.multiplayer.projetoaccountjpa.enums.TipoLancamento;
 import com.multiplayer.projetoaccountjpa.exception.SaldoInsuficienteException;
 import com.multiplayer.projetoaccountjpa.model.Conta;
 import com.multiplayer.projetoaccountjpa.model.Lancamento;
+import com.multiplayer.projetoaccountjpa.model.PlanoConta;
 import com.multiplayer.projetoaccountjpa.repository.ContaRepository;
 import com.multiplayer.projetoaccountjpa.repository.LancamentoRepository;
+import com.multiplayer.projetoaccountjpa.repository.PlanoContaRepository;
 
 public class LancamentoService {
 	
 	@Autowired private LancamentoRepository repoLancamento;
 	@Autowired private ContaRepository repoConta;
+	@Autowired private PlanoContaRepository repoPlanoConta;
 	
 	public List<Lancamento> buscarTodos() {
 		return repoLancamento.findAll();
@@ -30,24 +33,18 @@ public class LancamentoService {
 		return repoLancamento.findAllByDataBetween(inicio, fim);
 	}
 	
-	private Boolean temSaldoSuficiente(Conta conta, Double valor) {
-		Double saldoPrevisao = conta.getSaldo() - valor;
-		if (saldoPrevisao < 0) {
-			return false;
-		}
-		return true;
-	}
-	
-	public void novoLancamento(String numeroConta, Double valor, String descricao, TipoLancamento tipo, String categoria, String numeroContaDestino) {
+	public void novoLancamento(String numeroConta, Double valor, String descricao, TipoLancamento tipo, Integer categoria_id, String numeroContaDestino) {
 		
 		// valida os campos passados
-		if (numeroConta == null || valor == null || valor <= 0 || descricao == null || tipo == null || categoria == null) {
+		if (numeroConta == null || valor == null || valor <= 0 || descricao == null || tipo == null || categoria_id == null) {
 			throw new IllegalArgumentException();
 		}
 		// se for transferência precisa da conta de destino
 		if (tipo == TipoLancamento.TRANSFERENCIA && numeroContaDestino == null) {
 			throw new IllegalArgumentException();
 		}
+		
+		Optional<PlanoConta> pc = repoPlanoConta.findById(categoria_id);
 		
 		// busca a conta
 		List<Conta> c = repoConta.findByNumero(numeroConta);
@@ -65,8 +62,8 @@ public class LancamentoService {
 		l.setNumeroConta(contaUsuario.getNumero());
 		l.setValor(valor);
 		l.setDescricao(descricao);
-		l.setTipo(tipo.name());
-		l.setCategoria(categoria);
+		l.setTipo(tipo);
+//		l.setCategoria(pc);
 		
 		if (tipo == TipoLancamento.TRANSFERENCIA) {
 			// pega a conta de destino
@@ -109,4 +106,12 @@ public class LancamentoService {
 		
 	}
 	
+	private Boolean temSaldoSuficiente(Conta conta, Double valor) {
+		Double saldoPrevisao = conta.getSaldo() - valor;
+		if (saldoPrevisao < 0) {
+			return false;
+		}
+		return true;
+	}
+
 }
