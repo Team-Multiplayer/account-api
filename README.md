@@ -15,9 +15,13 @@ Código fonte no Github com o arquivo README detalhando as funcionalidades, clas
 
 ## Time Multiplayer
 - [Danilo Elias](https://github.com/danilose)
+	
 - [Lucas Villarim](https://github.com/LucasVillarim)
+
 - [Luciano Faria](https://github.com/lucianofa)
+
 - [Mathias Ribeiro](https://github.com/ribeiromathias)
+Está focado no desenvolvimento da parte web em HTML, CSS e JavaSc
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTIyMzk3MDg1NF19
+eyJoaXN0b3J5IjpbLTE4MzkxNDM5MDJdfQ==
 -->
