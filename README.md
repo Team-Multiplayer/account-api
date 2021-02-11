@@ -15,13 +15,16 @@ Código fonte no Github com o arquivo README detalhando as funcionalidades, clas
 
 ## Time Multiplayer
 - [Danilo Elias](https://github.com/danilose)
-	
+Ajudou no desenvolvimento da modelagem e implementação dos Services e Models.
 - [Lucas Villarim](https://github.com/LucasVillarim)
-
+Ajudou no desenvolvimento da modelagem e implementação dos Services e Models.
 - [Luciano Faria](https://github.com/lucianofa)
-Ajudou no desenvolvimento da modelagem
+Ajudou no desenvolvimento da modelagem e entendimento dos requisitos.
 - [Mathias Ribeiro](https://github.com/ribeiromathias)
 Ajudou no desenvolvimento da modelagem. E está focado no desenvolvimento da parte web em HTML, CSS e JavaScript
+
+## Estrutura do Projeto
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTUyODAyMzU3NF19
+eyJoaXN0b3J5IjpbLTIwOTU1ODg5MjhdfQ==
 -->
