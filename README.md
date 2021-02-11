@@ -19,9 +19,9 @@ Código fonte no Github com o arquivo README detalhando as funcionalidades, clas
 - [Lucas Villarim](https://github.com/LucasVillarim)
 
 - [Luciano Faria](https://github.com/lucianofa)
-
+Ajudou no desenvolvimento da modelagem
 - [Mathias Ribeiro](https://github.com/ribeiromathias)
-Está focado no desenvolvimento da parte web em HTML, CSS e JavaSc
+Ajudou no desenvolvimento da modelagem. E está focado no desenvolvimento da parte web em HTML, CSS e JavaScript
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4MzkxNDM5MDJdfQ==
+eyJoaXN0b3J5IjpbLTUyODAyMzU3NF19
 -->
