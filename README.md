@@ -27,26 +27,26 @@ Ajudou no desenvolvimento da modelagem. E está focado no desenvolvimento da par
 Dividimos as classes em pacotes de acordo com suas responsabilidades.
 - Model: onde definimos os modelos ou seja as classes dos objetos que usamos no sistema
 - Service: onde definimos as regras de negócio para manipulação dos Models
+
+├── _config.yml
+├── _drafts
+│   ├── begin-with-the-crazy-ideas.textile
+│   └── on-simplicity-in-technology.markdown
+├── _includes
+│   ├── footer.html
+│   └── header.html
+├── _layouts
+│   ├── default.html
+│   └── post.html
+├── _posts
+│   ├── 2007-10-29-why-every-programmer-should-play-nethack.textile
+│   └── 2009-04-26-barcamp-boston-4-roundup.textile
+├── _data
+│   └── members.yml
+├── _site
+└── index.html
 ```
-.
-+-- _config.yml
-+-- _drafts
-|   +-- begin-with-the-crazy-ideas.textile
-|   +-- on-simplicity-in-technology.markdown
-+-- _includes
-|   +-- footer.html
-|   +-- header.html
-+-- _layouts
-|   +-- default.html
-|   +-- post.html
-+-- _posts
-|   +-- 2007-10-29-why-every-programmer-should-play-nethack.textile
-|   +-- 2009-04-26-barcamp-boston-4-roundup.textile
-+-- _data
-|   +-- members.yml
-+-- _site
-+-- index.html
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI2OTA4ODg1OCw5Mjg2NDc1ODJdfQ==
+eyJoaXN0b3J5IjpbLTIxMjEzOTk0OTksOTI4NjQ3NTgyXX0=
 -->
