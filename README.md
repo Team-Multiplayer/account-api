@@ -47,7 +47,6 @@ Dividimos as classes em pacotes de acordo com suas responsabilidades.
        ┃ ┗ 📜SaldoInsuficienteException.java
        ┣ 📂model
        ┃ ┣ 📜Conta.java
-       ┃ ┣ 📜Dashboard.java
        ┃ ┣ 📜Lancamento.java
        ┃ ┣ 📜PlanoConta.java
        ┃ ┗ 📜Usuario.java
