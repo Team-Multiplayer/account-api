@@ -24,6 +24,10 @@ public class UsuarioService {
 		return repoUsuario.findById(id);
 	}
 
+	public List<Usuario> buscaPorLogin(String login) {
+		return repoUsuario.findByLogin(login);
+	}
+	
 	public Usuario cadastrarUsuario(String nome, String cpf, String login, String senha) {
 		
 		// faz as validações do usuário

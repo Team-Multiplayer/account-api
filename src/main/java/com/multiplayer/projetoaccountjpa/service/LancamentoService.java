@@ -30,6 +30,17 @@ public class LancamentoService {
 	}
 	
 	public List<Lancamento> extratoPorPeriodo(LocalDate inicio, LocalDate fim) {
+		
+		// valida os campos passados
+		if (inicio == null || fim == null) {
+			throw new IllegalArgumentException();
+		}
+		// verifica se a data de inicio é posterior a data de fim
+		if (fim.isBefore(inicio)) {
+			// lançar exceção
+			throw new IllegalArgumentException();
+		}
+		
 		return repoLancamento.findAllByDataBetween(inicio, fim);
 	}
 	
@@ -63,7 +74,7 @@ public class LancamentoService {
 		l.setValor(valor);
 		l.setDescricao(descricao);
 		l.setTipo(tipo);
-//		l.setCategoria(pc);
+		l.setCategoria(pc.get());
 		
 		if (tipo == TipoLancamento.TRANSFERENCIA) {
 			// pega a conta de destino

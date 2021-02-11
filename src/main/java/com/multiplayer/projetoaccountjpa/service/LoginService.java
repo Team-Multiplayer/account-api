@@ -14,10 +14,6 @@ public class LoginService {
 	@Autowired
 	private UsuarioRepository repoUsuario;
 
-	public List<Usuario> buscaPorLogin(String login) {
-		return repoUsuario.findByLogin(login);
-	}
-	
 	public Boolean validarLogin(String login, String senha) {
 		
 		if (login == null || senha == null) {
@@ -25,7 +21,7 @@ public class LoginService {
 		}
 		
 		// busca usuário por login
-		List<Usuario> lu = buscaPorLogin(login);
+		List<Usuario> lu = repoUsuario.findByLogin(login);
 		// se retorno algum usuário
 		if (!lu.isEmpty()) {
 			// pega o usuário retornado
