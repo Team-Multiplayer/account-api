@@ -15,9 +15,9 @@ Código fonte no Github com o arquivo README detalhando as funcionalidades, clas
 
 ## Participação
 - Danilo
-- Lucas
+- [Lucas Villarim](https://github.com/LucasVillarim)
 - Luciano
-- Ma
+- Mathias
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTY1NDIwNTA5MV19
+eyJoaXN0b3J5IjpbLTEwMjUyNDE0NDVdfQ==
 -->
