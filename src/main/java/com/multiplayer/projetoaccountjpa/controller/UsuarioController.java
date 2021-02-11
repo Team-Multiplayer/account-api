@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.multiplayer.projetoaccountjpa.model.Usuario;
+import com.multiplayer.projetoaccountjpa.service.LoginService;
 import com.multiplayer.projetoaccountjpa.service.UsuarioService;
 
 @RestController
 @RequestMapping("/api/usuario")
 public class UsuarioController {
 
-	@Autowired
-	private UsuarioService usuarioService;
+	@Autowired private UsuarioService usuarioService;
 
 	@GetMapping
 	public List<Usuario> getTodosUsuarios() {
@@ -41,13 +41,6 @@ public class UsuarioController {
 
 			return ResponseEntity.notFound().build();
 		}
-	}
-	
-	@PostMapping("/login")
-	@ResponseStatus(HttpStatus.ACCEPTED)
-	public Boolean loginUsuario(@Validated @RequestParam String login, @RequestParam String senha) {
-		 
-		return usuarioService.validarLogin(login, senha);
 	}
 	
 	@PostMapping("/cadastrar")
