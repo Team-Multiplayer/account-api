@@ -10,3 +10,8 @@ Aplicar as boas práticas de desenvolvimento, organização do projeto, testes u
 
 ## Forma de entrega:
 Código fonte no github com o arquivo README detalhando as funcionalidades, classe principal (main) e membros envolvidos e sua participação no projeto.
+
+
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbOTU5MzYyMDg2XX0=
+-->
