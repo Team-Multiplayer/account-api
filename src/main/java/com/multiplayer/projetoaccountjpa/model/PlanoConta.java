@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.multiplayer.projetoaccountjpa.enums.TipoPlanoConta;
+
 @Entity
 public class PlanoConta {
 	@Id
@@ -13,7 +15,7 @@ public class PlanoConta {
 	private Integer id;
 	
 	@Column(nullable = false)
-	private String contaReceitaDespesa;
+	private TipoPlanoConta tipo;
 	
 	@Column(nullable = false)
 	private String descricao;
@@ -21,14 +23,19 @@ public class PlanoConta {
 	// Default constructor
 	public PlanoConta() {}
 	
+	public PlanoConta(String descricao, TipoPlanoConta tipo) {
+		this.descricao = descricao;
+		this.tipo = tipo;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
-	public String getContaReceitaDespesa() {
-		return contaReceitaDespesa;
+	public TipoPlanoConta getTipo() {
+		return tipo;
 	}
-	public void setContaReceitaDespesa(String contaReceitaDespesa) {
-		this.contaReceitaDespesa = contaReceitaDespesa;
+	public void setTipo(TipoPlanoConta tipo) {
+		this.tipo = tipo;
 	}
 	public String getDescricao() {
 		return descricao;

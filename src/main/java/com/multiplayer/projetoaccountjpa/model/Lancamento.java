@@ -1,13 +1,19 @@
 package com.multiplayer.projetoaccountjpa.model;
 
 import java.time.LocalDate;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
-//@OneToMany(targetEntity=, mappedBy="", fetch=FetchType.EAGER)
+import com.multiplayer.projetoaccountjpa.enums.TipoLancamento;
+
 @Entity
 public class Lancamento {
 	@Id
@@ -29,13 +35,16 @@ public class Lancamento {
 	@Column(nullable = true)
 	private String contaDestino;
 	
-//	mudar tipagem
 	@Column(nullable = false)
-	private String tipo;
+	private TipoLancamento tipo;
 	
-//	mudar tipagem
-	@Column(nullable = false)
-	private String categoria;
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "categoria", referencedColumnName = "id")
+	private PlanoConta categoria;
+	
+	@ManyToOne
+    @JoinColumn(name="conta_id", nullable=false)
+	private Conta conta;
 
 	// Default constructor
 	public Lancamento() {};
@@ -84,19 +93,19 @@ public class Lancamento {
 		this.contaDestino = contaDestino;
 	}
 
-	public String getTipo() {
+	public TipoLancamento getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
+	public void setTipo(TipoLancamento tipo) {
 		this.tipo = tipo;
 	}
 
-	public String getCategoria() {
+	public PlanoConta getCategoria() {
 		return categoria;
 	}
 
-	public void setCategoria(String categoria) {
+	public void setCategoria(PlanoConta categoria) {
 		this.categoria = categoria;
 	}
 }
