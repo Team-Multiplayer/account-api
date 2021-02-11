@@ -14,10 +14,10 @@ Código fonte no Github com o arquivo README detalhando as funcionalidades, clas
 # Detalhes do Projeto
 
 ## Participação
-- Danilo
+- [Danilo Elias](https://github.com/danilose)
 - [Lucas Villarim](https://github.com/LucasVillarim)
 - Luciano
 - Mathias
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwMjUyNDE0NDVdfQ==
+eyJoaXN0b3J5IjpbLTE0NzQ1MDI0NzddfQ==
 -->
