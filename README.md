@@ -25,9 +25,8 @@ Ajudou no desenvolvimento da modelagem. E está focado no desenvolvimento da par
 
 ## Estrutura do Projeto
 Dividimos as classes em pacotes de acordo com suas responsabilidades.
-- Model
-- Repository
-- Service
+- Model: onde definimos os modelos ou seja as classes dos objetos que usamos no sistema
+- Service: onde definimos as regras de negócio para manipulação dos Models
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTkxMTY0MDQyNF19
+eyJoaXN0b3J5IjpbOTI4NjQ3NTgyXX0=
 -->
