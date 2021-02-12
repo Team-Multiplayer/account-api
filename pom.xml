@@ -9,11 +9,11 @@
 		<version>2.4.2</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.multiplayer</groupId>
-	<artifactId>projeto-account-jpa</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>projeto-account-jpa</name>
-	<description>Demo project for Spring Boot</description>
+	<groupId>br.multiplayer</groupId>
+	<artifactId>account-api</artifactId>
+	<version>1.0</version>
+	<name>account-api</name>
+	<description>AccountBank API</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
