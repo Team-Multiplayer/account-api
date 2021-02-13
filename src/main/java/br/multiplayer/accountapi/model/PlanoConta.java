@@ -17,7 +17,7 @@ public class PlanoConta {
 	@Column(nullable = false)
 	private TipoPlanoConta tipo;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 100)
 	private String descricao;
 	
 	// Default constructor

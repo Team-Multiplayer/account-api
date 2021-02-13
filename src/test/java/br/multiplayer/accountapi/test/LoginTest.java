@@ -31,7 +31,6 @@ class LoginTest {
 		public UsuarioService usuarioService() {
 			return new UsuarioService();
 		}
-
 	}
 
 	@Autowired 
@@ -45,7 +44,7 @@ class LoginTest {
 	String senha;
 
 	@BeforeEach
-	void limparUsuarioRepository() {
+	void antesDeCadaTeste() {
 		// inicia dados do usuário
 		nome = "Danilo Elias";
 		cpf = "37115975382";
@@ -68,7 +67,7 @@ class LoginTest {
 	@DisplayName("Senha nula, esperado IllegalArgumentException")
 	public void senhaNula() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			login = null;
+			senha = null;
 			// tenta entrar com senha nula
 			loginService.efetuarLogin(login, senha);
 		});

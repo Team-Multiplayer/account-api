@@ -20,19 +20,19 @@ public class Lancamento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 20)
 	private String numeroConta;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 10)
 	private LocalDate data;
 	
 	@Column(nullable = false)
 	private Double valor;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 100)
 	private String descricao;
 	
-	@Column(nullable = true)
+	@Column(nullable = true, length = 20)
 	private String contaDestino;
 	
 	@Column(nullable = false)

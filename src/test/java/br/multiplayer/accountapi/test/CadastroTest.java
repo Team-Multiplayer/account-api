@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import br.multiplayer.accountapi.exception.LoginJaCadastradoException;
+import br.multiplayer.accountapi.model.Conta;
 import br.multiplayer.accountapi.model.Usuario;
 import br.multiplayer.accountapi.repository.UsuarioRepository;
 import br.multiplayer.accountapi.service.UsuarioService;
@@ -24,7 +25,6 @@ class CadastroTest {
 	
 	@TestConfiguration
 	static class CadastroTestConfiguration {
-		
 		@Bean
 		public UsuarioService usuarioService() {
 			return new UsuarioService();
@@ -46,20 +46,8 @@ class CadastroTest {
 		cpf = "37115975382";
 		login = "danilo";
 		senha = "pass1234";
-		// limpa o repositório para os testes ficarem independentes
-		// ur.limparRepository();
 	}
 
-	
-	
-	@Test
-	void injectedComponentsAreNotNull(){
-	  assertNotNull(usuarioService);
-	}
-	
-	
-	
-	
 	@Test
 	@DisplayName("Nome nulo, esperado NullPointerException")
 	public void nomeNulo() {
@@ -138,10 +126,10 @@ class CadastroTest {
 		assertEquals(usuario.getLogin(), login);
 		assertEquals(usuario.getSenha(), senha);
 		// pega a conta gerada para o usuário
-		Conta conta = usuario.getConta();
+		Conta conta = usuario.getContas();
 		assertNotNull(conta);
 		// a conta criada deve ter o login como identificador
-		assertEquals(conta.getIdentificador(), login);
+		assertEquals(conta.getNumero(), login);
 	}
 
 	@Test

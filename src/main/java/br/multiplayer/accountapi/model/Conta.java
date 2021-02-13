@@ -17,12 +17,13 @@ public class Conta {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 20)
 	private String numero;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 20)
 	private TipoConta tipoConta;
 	
+	@Column(nullable = false)
 	private Double saldo;
 
 	@OneToMany(mappedBy="conta")

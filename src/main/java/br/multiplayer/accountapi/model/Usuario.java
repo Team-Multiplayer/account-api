@@ -18,16 +18,16 @@ public class Usuario {
 	@Column(nullable = false)
 	private String nome;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 11)
 	private String cpf;
 	
-	@Column(nullable = false, unique=true)
+	@Column(nullable = false, unique=true, length = 20)
 	private String login;
 	
 	@Column(nullable = false)
 	private String senha;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "conta", referencedColumnName = "id")
 	private Conta conta;
 	

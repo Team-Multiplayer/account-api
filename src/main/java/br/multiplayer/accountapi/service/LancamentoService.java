@@ -47,7 +47,7 @@ public class LancamentoService {
 	public void novoLancamento(String numeroConta, Double valor, String descricao, TipoLancamento tipo, Integer categoria_id, String numeroContaDestino) {
 		
 		// valida os campos passados
-		if (numeroConta == null || valor == null || valor <= 0 || descricao == null || tipo == null || categoria_id == null) {
+		if (numeroConta == null || valor == null || valor < 0 || descricao == null || tipo == null || categoria_id == null) {
 			throw new IllegalArgumentException();
 		}
 		// se for transferência precisa da conta de destino
