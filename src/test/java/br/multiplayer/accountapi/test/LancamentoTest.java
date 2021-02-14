@@ -63,7 +63,7 @@ class LancamentoTest {
 		cpf = "37115975382";
 		login = "danilo";
 		senha = "pass1234";
-		usuario = usuarioService.cadastrarUsuario(nome, cpf, login, senha);
+//		usuario = usuarioService.cadastrarUsuario();
 	}
 	
 	@BeforeEach
