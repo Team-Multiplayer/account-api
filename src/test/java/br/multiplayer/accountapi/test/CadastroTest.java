@@ -2,14 +2,19 @@ package br.multiplayer.accountapi.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -34,10 +39,14 @@ class CadastroTest {
 	@Autowired
 	private UsuarioService usuarioService;
 	
-	String nome;
-	String cpf;
-	String login;
-	String senha;
+	@MockBean
+	private UsuarioRepository repoUsuario;
+
+	private String nome;
+	private String cpf;
+	private String login;
+	private String senha;
+	private Usuario usuario;
 
 	@BeforeEach
 	void antesDeCadaTeste() {
@@ -46,15 +55,18 @@ class CadastroTest {
 		cpf = "37115975382";
 		login = "danilo";
 		senha = "pass1234";
+		usuario = new Usuario(nome,cpf, login, senha);
+		
+		
 	}
 
 	@Test
 	@DisplayName("Nome nulo, esperado NullPointerException")
 	public void nomeNulo() {
 		assertThrows(NullPointerException.class, () -> {
-			nome = null;
+			usuario.setNome(null);
 			// cadastra um usuário com login nulo
-			usuarioService.cadastrarUsuario(nome, cpf, login, senha);
+			usuarioService.cadastrarUsuario(usuario);
 		});
 		
 	}
@@ -63,9 +75,9 @@ class CadastroTest {
 	@DisplayName("CPF nulo, esperado NullPointerException")
 	public void cpfNulo() {
 		assertThrows(NullPointerException.class, () -> {
-			cpf = null;
+			usuario.setCpf(null);
 			// cadastra um usuário com login nulo
-			usuarioService.cadastrarUsuario(nome, cpf, login, senha);
+			usuarioService.cadastrarUsuario(usuario);
 		});
 		
 	}
@@ -74,9 +86,9 @@ class CadastroTest {
 	@DisplayName("Login nulo, esperado NullPointerException")
 	public void loginNulo() {
 		assertThrows(NullPointerException.class, () -> {
-			login = null;
+			usuario.setLogin(null);
 			// cadastra um usuário com login nulo
-			usuarioService.cadastrarUsuario(nome, cpf, login, senha);
+			usuarioService.cadastrarUsuario(usuario);
 		});
 		
 	}
@@ -85,9 +97,9 @@ class CadastroTest {
 	@DisplayName("Senha nula, esperado NullPointerException")
 	public void SenhaNula() {
 		assertThrows(NullPointerException.class, () -> {
-			senha = null;
+			usuario.setSenha(null);
 			// cadastra um usuário com senha nula
-			usuarioService.cadastrarUsuario(nome, cpf, login, senha);
+			usuarioService.cadastrarUsuario(usuario);
 		});
 		
 	}
@@ -97,9 +109,9 @@ class CadastroTest {
 	public void loginForaDoPadrao() {
 		assertThrows(IllegalArgumentException.class, () -> {
 			// login com mais de 20 caracteres
-			login = "123456789012345678901";
+			usuario.setLogin("123456789012345678901");
 			// cadastra um usuário com login fora do padrão desejado
-			usuarioService.cadastrarUsuario(nome, cpf, login, senha);
+			usuarioService.cadastrarUsuario(usuario);
 		});
 	}
 
@@ -108,17 +120,19 @@ class CadastroTest {
 	public void cpfForaDoPadrao() {
 		assertThrows(IllegalArgumentException.class, () -> {
 			// cpf com mais de 11 caracteres
-			cpf = "999999999999";
+			usuario.setCpf("999999999999");
 			// cadastra um usuário com cpf fora do padrão desejado
-			usuarioService.cadastrarUsuario(nome, cpf, login, senha);
+			usuarioService.cadastrarUsuario(usuario);
 		});
 	}
 
 	@Test
 	@DisplayName("Cadastrar novo usuário, esperado usuário com login passado")
 	public void cadastrarNovoUsuario() {
+		Mockito.when(repoUsuario.findByLogin(usuario.getLogin())).thenReturn(new ArrayList<Usuario>());
+		Mockito.when(repoUsuario.save(usuario)).thenReturn(usuario);
 		// cadastra um usuário
-		Usuario usuario = usuarioService.cadastrarUsuario(nome, cpf, login, senha);
+		usuario = usuarioService.cadastrarUsuario(usuario);
 		// deve retornar um usuário (não deve ser nulo)
 		assertNotNull(usuario);
 		assertEquals(usuario.getNome(), nome);
@@ -136,10 +150,9 @@ class CadastroTest {
 	@DisplayName("Cadastrar novo usuário com login já existente, esperado LoginJaCadastradoException")
 	void loginJaCadastrado() {
 		assertThrows(LoginJaCadastradoException.class, () -> {
-			// cadastra um usuário
-			usuarioService.cadastrarUsuario(nome, cpf, login, senha);
+			Mockito.when(repoUsuario.findByLogin(usuario.getLogin())).thenReturn(List.of(usuario));
 			// tenta cadastrar um usuário com o mesmo login
-			usuarioService.cadastrarUsuario(nome, cpf, login, senha);
+			usuarioService.cadastrarUsuario(usuario);
 		});
 	}
 

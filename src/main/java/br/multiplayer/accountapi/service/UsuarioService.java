@@ -28,38 +28,32 @@ public class UsuarioService {
 		return repoUsuario.findByLogin(login);
 	}
 	
-	public Usuario cadastrarUsuario(String nome, String cpf, String login, String senha) {
+	public Usuario cadastrarUsuario(Usuario usuario) {
 		
 		// faz as validações do usuário
 		// verifica se os dados foram passados
-		if (nome == null || cpf == null || login == null ||	senha == null ) {
+		if (usuario.getNome() == null || usuario.getCpf() == null || usuario.getLogin() == null ||	usuario.getSenha() == null ) {
 			throw new NullPointerException("Usuário não pode ser criado.");
 		}
 		// verifica o tamanho do login
-		if (login.length() > 20) {
+		if (usuario.getLogin().length() > 20) {
 			throw new IllegalArgumentException("O login não deve conter mais que 20 caracteres.");
 		}
 		// verifica o tamanho do CPF
-		if (cpf.length() > 11) {
+		if (usuario.getCpf().length() > 11) {
 			throw new IllegalArgumentException("O CPF é inválido.");
 		}
 		
 		// busca um usuário com o login passado
-		if (!repoUsuario.findByLogin(login).isEmpty()) {
+		if (!repoUsuario.findByLogin(usuario.getLogin()).isEmpty()) {
 			// se encontrou um usuário
 			// lançar uma exceção
 			throw new LoginJaCadastradoException();
 		}
 		
-		// se tudo correu bem cria o usuário
 		// TODO hash da senha
-		Usuario u = new Usuario(nome, cpf, login, senha);
-		// se conseguiu criar o usuário
-		if (u != null) {
-			// salva no repositório
-			return u = repoUsuario.save(u);
-		}
-		// em caso de algum problema na criação retorna nulo
-		return null;
+		// se tudo correu bem cria o usuário
+		// salva no repositório
+		return repoUsuario.save(usuario);
 	}
 }
