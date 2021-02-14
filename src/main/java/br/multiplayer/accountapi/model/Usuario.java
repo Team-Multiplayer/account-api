@@ -1,5 +1,8 @@
 package br.multiplayer.accountapi.model;
 
+import java.util.List;
+import java.util.Optional;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;

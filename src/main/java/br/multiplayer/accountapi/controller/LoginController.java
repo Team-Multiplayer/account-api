@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.multiplayer.accountapi.dto.LoginDto;
+import br.multiplayer.accountapi.model.Usuario;
 import br.multiplayer.accountapi.service.LoginService;
 
 @RestController
@@ -22,9 +23,12 @@ public class LoginController {
 
 	@PostMapping("/login")
 	@ResponseStatus(HttpStatus.ACCEPTED)
-	public Boolean loginUsuario(@Validated @RequestBody LoginDto loginDto) {
+	public Usuario loginUsuario(@Validated @RequestBody LoginDto loginDto) {
 		 
 		return loginService.validarLogin(loginDto);
+		
+//		return loginCheck ? loginService.efetuarLogin(loginDto) : null;
+		
 	}
 	
 }
