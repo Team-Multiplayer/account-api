@@ -2,19 +2,23 @@ package br.multiplayer.accountapi.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import br.multiplayer.accountapi.model.Usuario;
+import br.multiplayer.accountapi.repository.UsuarioRepository;
 import br.multiplayer.accountapi.service.LoginService;
-import br.multiplayer.accountapi.service.UsuarioService;
 import br.multiplayer.accountapi.exception.LoginOuSenhaInvalidosException;
 
 @ExtendWith(SpringExtension.class)
@@ -27,21 +31,19 @@ class LoginTest {
 		public LoginService loginService() {
 			return new LoginService();
 		}
-		@Bean
-		public UsuarioService usuarioService() {
-			return new UsuarioService();
-		}
 	}
 
 	@Autowired 
 	private LoginService loginService;
-	@Autowired 
-	private UsuarioService usuarioService;
+
+	@MockBean
+	private UsuarioRepository repoUsuario;
 	
-	String nome;
-	String cpf;
-	String login;
-	String senha;
+	private String nome;
+	private String cpf;
+	private String login;
+	private String senha;
+	private Usuario usuario;
 
 	@BeforeEach
 	void antesDeCadaTeste() {
@@ -50,6 +52,7 @@ class LoginTest {
 		cpf = "37115975382";
 		login = "danilo";
 		senha = "pass1234";
+		usuario = new Usuario(nome, cpf, login, senha);
 	}
 	
 	@Test
@@ -87,9 +90,8 @@ class LoginTest {
 	@DisplayName("Senha inválida, esperado LoginOuSenhaInvalidosException")
 	void senhaInvalida() {
 		assertThrows(LoginOuSenhaInvalidosException.class, () -> {
+			Mockito.when(repoUsuario.findByLogin(usuario.getLogin())).thenReturn(List.of(usuario));
 			String senhaInvalida = "1234pass";
-			// cadastra o usuário
-			usuarioService.cadastrarUsuario(nome, cpf, login, senha);
 			// busca o usuário com o login cadastrado mas a senha inválida
 			loginService.efetuarLogin(login, senhaInvalida);
 		});
@@ -98,8 +100,7 @@ class LoginTest {
 	@Test
 	@DisplayName("Login existente, esperado usuário")
 	void loginExistente() {
-		// cadastra o usuário
-		usuarioService.cadastrarUsuario(nome, cpf, login, senha);
+		Mockito.when(repoUsuario.findByLogin(usuario.getLogin())).thenReturn(List.of(usuario));
 		// busca o usuário com o login cadastrado
 		Usuario usuario = loginService.efetuarLogin(login, senha);
 		// deve retornar um usuário
@@ -110,8 +111,7 @@ class LoginTest {
 	@DisplayName("Senha válida, esperado usuário com login passado")
 	void senhaValida() {
 		assertDoesNotThrow(() -> {
-			// cadastra o usuário
-			usuarioService.cadastrarUsuario(nome, cpf, login, senha);
+			Mockito.when(repoUsuario.findByLogin(usuario.getLogin())).thenReturn(List.of(usuario));
 			// busca o usuário com o login cadastrado mas a senha inválida
 			Usuario usuario = loginService.efetuarLogin(login, senha);
 			// deve retornar um usuário
