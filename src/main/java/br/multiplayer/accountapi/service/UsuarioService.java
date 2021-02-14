@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.multiplayer.accountapi.exception.LoginJaCadastradoException;
@@ -12,6 +14,9 @@ import br.multiplayer.accountapi.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private UsuarioRepository repoUsuario;
@@ -52,6 +57,8 @@ public class UsuarioService {
 		}
 		
 		// TODO hash da senha
+		String hashedPassword = passwordEncoder.encode(usuario.getSenha());
+		usuario.setSenha(hashedPassword);
 		// se tudo correu bem cria o usuário
 		// salva no repositório
 		return repoUsuario.save(usuario);
