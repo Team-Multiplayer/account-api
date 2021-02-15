@@ -36,15 +36,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 	
 	
-	@Autowired
-    public void configAuthentication(AuthenticationManagerBuilder auth)
-        throws Exception {
-
-        auth.jdbcAuthentication().dataSource(dataSource)
-            .passwordEncoder(passwordEncoder())
-            .usersByUsernameQuery("{SQL}") //SQL query
-            .authoritiesByUsernameQuery("{SQL}"); //SQL query
-    }
+//	@Autowired
+//    public void configAuthentication(AuthenticationManagerBuilder auth)
+//        throws Exception {
+//
+//        auth.jdbcAuthentication().dataSource(dataSource)
+//            .passwordEncoder(passwordEncoder())
+//            .usersByUsernameQuery("{SQL}") //SQL query
+//            .authoritiesByUsernameQuery("{SQL}"); //SQL query
+//    }
 	
 	@Override
     public void configure(HttpSecurity http) throws Exception {
@@ -56,11 +56,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.POST, "/login").permitAll()
         .antMatchers(HttpMethod.GET,"/api/usuario").permitAll()
         .antMatchers(HttpMethod.GET,"/master/*").permitAll()
-        .anyRequest().authenticated()
+        .antMatchers(HttpMethod.GET,"/api/*").permitAll()
+        .anyRequest().authenticated();
         
         
-        .and().csrf().ignoringAntMatchers("/h2/**")
-        .and().headers().frameOptions().sameOrigin();
+//        .and().csrf().ignoringAntMatchers("/h2/**")
+//        .and().headers().frameOptions().sameOrigin();
        
     }
 	

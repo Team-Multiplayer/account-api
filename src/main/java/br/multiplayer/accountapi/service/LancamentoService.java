@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import br.multiplayer.accountapi.dto.LancamentoDto;
 import br.multiplayer.accountapi.enums.TipoLancamento;
@@ -16,6 +17,7 @@ import br.multiplayer.accountapi.repository.ContaRepository;
 import br.multiplayer.accountapi.repository.LancamentoRepository;
 import br.multiplayer.accountapi.repository.PlanoContaRepository;
 
+@Service
 public class LancamentoService {
 
 	@Autowired

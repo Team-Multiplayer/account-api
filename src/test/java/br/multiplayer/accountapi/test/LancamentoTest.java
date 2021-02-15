@@ -92,7 +92,7 @@ class LancamentoTest {
 		assertEquals(conta.getNumero(), login);
 		
 		
-		lancamentoService.novoLancamento(login, valor, descricao, tipo, null, contaDestino);
+//		lancamentoService.novoLancamento(login, valor, descricao, tipo, null, contaDestino);
 	}
 
 }
