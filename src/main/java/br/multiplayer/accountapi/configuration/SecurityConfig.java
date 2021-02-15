@@ -60,7 +60,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET,"/api/dashboard/*").permitAll()
         .anyRequest().authenticated();
         
-        
 //       	.and().csrf().ignoringAntMatchers("/h2/**")
 //        .and().headers().frameOptions().sameOrigin();
        
