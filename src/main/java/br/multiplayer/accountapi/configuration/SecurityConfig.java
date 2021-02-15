@@ -16,13 +16,26 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import br.multiplayer.accountapi.service.LoginService;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
+    private LoginService loginService;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	
+	@Autowired
     DataSource dataSource;
     
+	public void WebSecurity( LoginService loginService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.loginService = loginService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+	
+	
 	@Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth)
         throws Exception {
@@ -43,14 +56,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.POST, "/login").permitAll()
         .antMatchers(HttpMethod.GET,"/api/usuario").permitAll()
         .antMatchers(HttpMethod.GET,"/master/*").permitAll()
-        .anyRequest().authenticated();
+        .anyRequest().authenticated()
         
         
-//        .and().csrf().ignoringAntMatchers("/h2/**")
-//        .and().headers().frameOptions().sameOrigin();
+        .and().csrf().ignoringAntMatchers("/h2/**")
+        .and().headers().frameOptions().sameOrigin();
        
     }
 	
+//	bean para configuração do CORS em nível de Spring Security.
 	@Bean
     CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

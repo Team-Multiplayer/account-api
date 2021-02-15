@@ -74,8 +74,8 @@ public class UsuarioService {
 		
 		String hashedPassword = passwordEncoder.encode(usuario.getSenha());
 		usuario.setSenha(hashedPassword);
-		usuario.setContaCorrente(new Conta(TipoConta.CORRENTE));
-		usuario.setContaCredito(new Conta(TipoConta.CREDITO));
+		usuario.setContaCorrente(new Conta(usuario.getLogin(), TipoConta.CORRENTE));
+		usuario.setContaCredito(new Conta(usuario.getLogin() + "-1", TipoConta.CREDITO));
 		
 		// se tudo correu bem cria o usuário
 		// salva no repositório

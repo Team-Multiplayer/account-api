@@ -1,10 +1,9 @@
-package br.multiplayer.accountapi.model;
+package br.multiplayer.accountapi.dto;
 
 import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,60 +12,39 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import br.multiplayer.accountapi.enums.TipoLancamento;
+import br.multiplayer.accountapi.model.Conta;
+import br.multiplayer.accountapi.model.PlanoConta;
 
-@Entity
-public class Lancamento {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	
-	@Column(nullable = false, length = 20)
-	private String numeroConta; // alterado para integer
-	
-	@Column(nullable = false, length = 10)
-	private LocalDate data;
-	
-	@Column(nullable = false)
+public class LancamentoDto {
+	private String numeroConta;
 	private Double valor;
-	
-	@Column(nullable = false, length = 100)
 	private String descricao;
-	
-	@Column(nullable = true, length = 20)
+	private TipoLancamento tipo;
+	private PlanoConta categoria;
 	private String contaDestino;
 	
-	@Column(nullable = false)
-	private TipoLancamento tipo;
+//	Default constructor
+	public LancamentoDto() {
+		
+	}
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "categoria", referencedColumnName = "id")
-	private PlanoConta categoria;
-	
-	@ManyToOne
-    @JoinColumn(name="conta_id", nullable=false)
-	private Conta conta;
-
-	// Default constructor
-	public Lancamento() {};
-	
-	public Integer getId() {
-		return id;
+	public LancamentoDto(String numeroConta, Double valor, String descricao,
+			String contaDestino, TipoLancamento tipo, PlanoConta categoria) {
+		super();
+		this.numeroConta = numeroConta;
+		this.valor = valor;
+		this.descricao = descricao;
+		this.contaDestino = contaDestino;
+		this.tipo = tipo;
+		this.categoria = categoria;
 	}
 
-	public String getNumeroConta() {//alterado para integer
+	public String getNumeroConta() {
 		return numeroConta;
 	}
 
-	public void setNumeroConta(String numeroConta) {//alterado para integer
+	public void setNumeroConta(String numeroConta) {
 		this.numeroConta = numeroConta;
-	}
-
-	public LocalDate getData() {
-		return data;
-	}
-
-	public void setData(LocalDate data) {
-		this.data = data;
 	}
 
 	public Double getValor() {
@@ -108,4 +86,8 @@ public class Lancamento {
 	public void setCategoria(PlanoConta categoria) {
 		this.categoria = categoria;
 	}
+	
+	
+	
+	
 }

@@ -50,8 +50,8 @@ public class Usuario {
 		this.cpf= cpf;
 		this.login = login;
 		this.senha = senha;
-		this.contaCorrente = new Conta(TipoConta.CORRENTE);
-		this.contaCredito = new Conta(TipoConta.CREDITO);
+		this.contaCorrente = new Conta(login, TipoConta.CORRENTE);
+		this.contaCredito = new Conta(login, TipoConta.CREDITO);
 	};
 	
 	public Integer getId() {

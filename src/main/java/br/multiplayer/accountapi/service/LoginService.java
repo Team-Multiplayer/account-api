@@ -21,7 +21,7 @@ public class LoginService {
 	@Autowired
 	private UsuarioRepository repoUsuario;
 
-	public boolean validarLogin(LoginDto loginDto) {
+	public Usuario validarLogin(LoginDto loginDto) {
 		
 		if (loginDto.getLogin() == null || loginDto.getSenha() == null) {
 			throw new IllegalArgumentException();
@@ -33,18 +33,15 @@ public class LoginService {
 		if (!lu.isEmpty()) {
 			// pega o usuário retornado
 			Usuario u = lu.get(0);
-			// compara a senha passada com a senha do usuário cadastrado
-			// TODO hash da senha
-//			String hashedPassword = passwordEncoder.encode(loginDto.getSenha());
-//			System.out.println(hashedPassword);
 			
+			// Comparação de senhas com BCrypt
 			boolean validPassword = passwordEncoder.matches(loginDto.getSenha(), u.getSenha());
 			
 			if (validPassword) {
-				return true;
+				return u;
 			}
 		}
-		return false;
+		return null;
 	}
 	
 	public Usuario efetuarLogin(LoginDto loginDto) {
@@ -71,7 +68,4 @@ public class LoginService {
 		
 		throw new LoginOuSenhaInvalidosException();
 	}
-	
-	
-
 }

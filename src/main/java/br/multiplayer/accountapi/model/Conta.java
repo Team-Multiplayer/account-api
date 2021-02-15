@@ -18,7 +18,7 @@ public class Conta {
 	private Integer id;
 	
 	@Column(nullable = false, length = 20)
-	private Integer numero;
+	private String numero;
 	
 	@Column(nullable = false, length = 20)
 	private TipoConta tipoConta;
@@ -32,8 +32,8 @@ public class Conta {
 	// Default constructor
 	public Conta() {}
 	
-	public Conta(TipoConta tipo) {
-		this.numero = 000;
+	public Conta(String numero, TipoConta tipo) {
+		this.numero = numero;
 		this.tipoConta = tipo;
 		this.saldo = 0D;
 	}
@@ -54,11 +54,11 @@ public class Conta {
 		return id;
 	}
 
-	public Integer getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 
-	public void setNumero(Integer numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 

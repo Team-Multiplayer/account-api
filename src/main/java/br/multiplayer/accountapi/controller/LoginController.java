@@ -23,9 +23,8 @@ public class LoginController {
 
 	@PostMapping("/login")
 	@ResponseStatus(HttpStatus.ACCEPTED)
-	public boolean loginUsuario(@Validated @RequestBody LoginDto loginDto) {
+	public Usuario loginUsuario(@Validated @RequestBody LoginDto loginDto) {
 		 
 		return loginService.validarLogin(loginDto);
 	}
-	
 }
