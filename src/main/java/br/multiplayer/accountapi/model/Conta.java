@@ -32,9 +32,9 @@ public class Conta {
 	// Default constructor
 	public Conta() {}
 	
-	public Conta(String numero) {
+	public Conta(String numero, TipoConta tipo) {
 		this.numero = numero;
-		this.tipoConta = TipoConta.CORRENTE;
+		this.tipoConta = tipo;
 		this.saldo = 0D;
 	}
 	

@@ -140,7 +140,7 @@ class CadastroTest {
 		assertEquals(usuario.getLogin(), login);
 		assertEquals(usuario.getSenha(), senha);
 		// pega a conta gerada para o usuário
-		Conta conta = usuario.getContas();
+		Conta conta = usuario.getContaCorrente();
 		assertNotNull(conta);
 		// a conta criada deve ter o login como identificador
 		assertEquals(conta.getNumero(), login);

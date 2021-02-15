@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import br.multiplayer.accountapi.enums.TipoConta;
+
 @Entity
 public class Usuario {
 	@Id
@@ -28,8 +30,12 @@ public class Usuario {
 	private String senha;
 	
 	@OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "conta", referencedColumnName = "id")
-	private Conta conta;
+    @JoinColumn(name = "contaCorrente", referencedColumnName = "id")
+	private Conta contaCorrente;
+	
+	@OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "contaCredito", referencedColumnName = "id")
+	private Conta contaCredito;
 	
 	// Default constructor
 	public Usuario () {}
@@ -44,7 +50,8 @@ public class Usuario {
 		this.cpf= cpf;
 		this.login = login;
 		this.senha = senha;
-		this.conta = new Conta(login);
+		this.contaCorrente = new Conta(login, TipoConta.CORRENTE);
+		this.contaCredito = new Conta(login, TipoConta.CREDITO);
 	};
 	
 	public Integer getId() {
@@ -87,12 +94,20 @@ public class Usuario {
 		this.senha = senha;
 	}
 	
-	public Conta getContas() {
-		return conta;
+	public Conta getContaCorrente() {
+		return contaCorrente;
 	}
 	
-	public void setContas(Conta conta) {
-		this.conta = conta;
+	public void setContaCorrente(Conta conta) {
+		this.contaCorrente = conta;
+	}
+	
+	public Conta getContaCredito() {
+		return contaCredito;
+	}
+	
+	public void setContaCredito(Conta conta) {
+		this.contaCredito = conta;
 	}
 	
 	

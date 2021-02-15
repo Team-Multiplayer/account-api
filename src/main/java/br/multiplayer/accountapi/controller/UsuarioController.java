@@ -24,7 +24,8 @@ import br.multiplayer.accountapi.service.UsuarioService;
 @RequestMapping("/api/usuario")
 public class UsuarioController {
 
-	@Autowired private UsuarioService usuarioService;
+	@Autowired 
+	private UsuarioService usuarioService;
 
 	@GetMapping
 	public List<Usuario> getTodosUsuarios() {
@@ -45,9 +46,9 @@ public class UsuarioController {
 	
 	@PostMapping("/cadastrar")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Usuario createUser(@Validated @RequestBody Usuario u) throws Exception {
+	public Usuario createUser(@Validated @RequestBody Usuario usuario) {
 		
-		return usuarioService.cadastrarUsuario(u.getNome(), u.getCpf(), u.getLogin(), u.getSenha());
-	};
+		return usuarioService.cadastrarUsuario(usuario);
+	}
 
 }

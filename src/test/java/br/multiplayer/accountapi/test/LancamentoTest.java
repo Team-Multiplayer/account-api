@@ -63,7 +63,7 @@ class LancamentoTest {
 		cpf = "37115975382";
 		login = "danilo";
 		senha = "pass1234";
-		usuario = usuarioService.cadastrarUsuario(nome, cpf, login, senha);
+//		usuario = usuarioService.cadastrarUsuario();
 	}
 	
 	@BeforeEach
@@ -86,13 +86,13 @@ class LancamentoTest {
 		assertEquals(usuario.getLogin(), login);
 		assertEquals(usuario.getSenha(), senha);
 		// pega a conta gerada para o usuário
-		Conta conta = usuario.getContas();
+		Conta conta = usuario.getContaCorrente();
 		assertNotNull(conta);
 		// a conta criada deve ter o login como identificador
 		assertEquals(conta.getNumero(), login);
 		
 		
-		lancamentoService.novoLancamento(login, valor, descricao, tipo, null, contaDestino);
+//		lancamentoService.novoLancamento(login, valor, descricao, tipo, null, contaDestino);
 	}
 
 }

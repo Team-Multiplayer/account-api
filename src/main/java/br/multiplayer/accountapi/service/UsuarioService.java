@@ -1,17 +1,36 @@
 package br.multiplayer.accountapi.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
+import br.multiplayer.accountapi.enums.TipoConta;
 import br.multiplayer.accountapi.exception.LoginJaCadastradoException;
+import br.multiplayer.accountapi.model.Conta;
 import br.multiplayer.accountapi.model.Usuario;
 import br.multiplayer.accountapi.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {
+	
+	@Autowired
+    private UserDetailsManager userDetailsManager;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private UsuarioRepository repoUsuario;
@@ -52,6 +71,12 @@ public class UsuarioService {
 		}
 		
 		// TODO hash da senha
+		
+		String hashedPassword = passwordEncoder.encode(usuario.getSenha());
+		usuario.setSenha(hashedPassword);
+		usuario.setContaCorrente(new Conta(usuario.getLogin(), TipoConta.CORRENTE));
+		usuario.setContaCredito(new Conta(usuario.getLogin() + "-1", TipoConta.CREDITO));
+		
 		// se tudo correu bem cria o usuário
 		// salva no repositório
 		return repoUsuario.save(usuario);

@@ -4,24 +4,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.multiplayer.accountapi.dto.LoginDto;
+import br.multiplayer.accountapi.model.Usuario;
 import br.multiplayer.accountapi.service.LoginService;
 
 @RestController
-@RequestMapping("/api/login")
+@RequestMapping("/api")
 public class LoginController {
 	
-	@Autowired private LoginService loginService;
+	@Autowired 
+	private LoginService loginService;
 
-	@PostMapping()
+	@PostMapping("/login")
 	@ResponseStatus(HttpStatus.ACCEPTED)
-	public Boolean loginUsuario(@Validated @RequestParam String login, @RequestParam String senha) {
+	public Usuario loginUsuario(@Validated @RequestBody LoginDto loginDto) {
 		 
-		return loginService.validarLogin(login, senha);
+		return loginService.validarLogin(loginDto);
 	}
-	
 }
