@@ -12,6 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -32,8 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
     public void configure(HttpSecurity http) throws Exception {
-       http.csrf().disable().authorizeRequests()
-        .antMatchers("/").permitAll()
+       http.cors().and().csrf().disable().authorizeRequests()
+       .antMatchers("/").permitAll()
         .antMatchers("/h2/**").permitAll()
         .antMatchers(HttpMethod.POST,"/api/*").permitAll()
         .antMatchers(HttpMethod.POST,"/api/usuario/cadastrar").permitAll()
@@ -41,9 +44,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET,"/api/usuario").permitAll()
         .antMatchers(HttpMethod.GET,"/master/*").permitAll()
         .anyRequest().authenticated();
+        
+        
 //        .and().csrf().ignoringAntMatchers("/h2/**")
 //        .and().headers().frameOptions().sameOrigin();
        
+    }
+	
+	@Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        return source;
     }
 	
 	@Bean
@@ -51,6 +63,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		return encoder;
 	}
-
-
 }
