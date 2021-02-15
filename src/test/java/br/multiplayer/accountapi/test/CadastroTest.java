@@ -55,7 +55,7 @@ class CadastroTest {
 		cpf = "37115975382";
 		login = "danilo";
 		senha = "pass1234";
-		usuario = new Usuario(nome,cpf, login, senha);
+//		usuario = new Usuario(nome,cpf, login, senha);
 		
 		
 	}
@@ -140,10 +140,10 @@ class CadastroTest {
 		assertEquals(usuario.getLogin(), login);
 		assertEquals(usuario.getSenha(), senha);
 		// pega a conta gerada para o usuário
-		Conta conta = usuario.getContas();
-		assertNotNull(conta);
+//		Conta conta = usuario.getContas();
+//		assertNotNull(conta);
 		// a conta criada deve ter o login como identificador
-		assertEquals(conta.getNumero(), login);
+//		assertEquals(conta.getNumero(), login);
 	}
 
 	@Test

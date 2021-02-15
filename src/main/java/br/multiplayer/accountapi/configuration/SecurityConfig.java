@@ -34,12 +34,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
        http.csrf().disable().authorizeRequests()
         .antMatchers("/").permitAll()
+        .antMatchers("/h2/**").permitAll()
         .antMatchers(HttpMethod.POST,"/api/*").permitAll()
         .antMatchers(HttpMethod.POST,"/api/usuario/cadastrar").permitAll()
         .antMatchers(HttpMethod.POST, "/login").permitAll()
         .antMatchers(HttpMethod.GET,"/api/usuario").permitAll()
         .antMatchers(HttpMethod.GET,"/master/*").permitAll()
         .anyRequest().authenticated();
+//        .and().csrf().ignoringAntMatchers("/h2/**")
+//        .and().headers().frameOptions().sameOrigin();
+       
     }
 	
 	@Bean

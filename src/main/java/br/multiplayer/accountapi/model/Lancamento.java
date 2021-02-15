@@ -21,7 +21,7 @@ public class Lancamento {
 	private Integer id;
 	
 	@Column(nullable = false, length = 20)
-	private String numeroConta;
+	private Integer numeroConta; // alterado para integer
 	
 	@Column(nullable = false, length = 10)
 	private LocalDate data;
@@ -53,11 +53,11 @@ public class Lancamento {
 		return id;
 	}
 
-	public String getNumeroConta() {
+	public Integer getNumeroConta() {//alterado para integer
 		return numeroConta;
 	}
 
-	public void setNumeroConta(String numeroConta) {
+	public void setNumeroConta(Integer numeroConta) {//alterado para integer
 		this.numeroConta = numeroConta;
 	}
 

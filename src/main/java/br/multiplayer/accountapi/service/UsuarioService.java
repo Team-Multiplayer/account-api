@@ -17,7 +17,9 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
+import br.multiplayer.accountapi.enums.TipoConta;
 import br.multiplayer.accountapi.exception.LoginJaCadastradoException;
+import br.multiplayer.accountapi.model.Conta;
 import br.multiplayer.accountapi.model.Usuario;
 import br.multiplayer.accountapi.repository.UsuarioRepository;
 
@@ -72,6 +74,8 @@ public class UsuarioService {
 		
 		String hashedPassword = passwordEncoder.encode(usuario.getSenha());
 		usuario.setSenha(hashedPassword);
+		usuario.setContaCorrente(new Conta(TipoConta.CORRENTE));
+		usuario.setContaCredito(new Conta(TipoConta.CREDITO));
 		
 		// se tudo correu bem cria o usuário
 		// salva no repositório

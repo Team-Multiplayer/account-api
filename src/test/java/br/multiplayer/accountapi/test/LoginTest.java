@@ -52,7 +52,7 @@ class LoginTest {
 		cpf = "37115975382";
 		login = "danilo";
 		senha = "pass1234";
-		usuario = new Usuario(nome, cpf, login, senha);
+//		usuario = new Usuario(nome, cpf, login, senha);
 	}
 	
 	@Test

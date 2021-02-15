@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.multiplayer.accountapi.dto.LoginDto;
 import br.multiplayer.accountapi.exception.LoginOuSenhaInvalidosException;
-
+import br.multiplayer.accountapi.model.Conta;
 import br.multiplayer.accountapi.model.Usuario;
 import br.multiplayer.accountapi.repository.UsuarioRepository;
 
@@ -21,7 +21,7 @@ public class LoginService {
 	@Autowired
 	private UsuarioRepository repoUsuario;
 
-	public Usuario validarLogin(LoginDto loginDto) {
+	public boolean validarLogin(LoginDto loginDto) {
 		
 		if (loginDto.getLogin() == null || loginDto.getSenha() == null) {
 			throw new IllegalArgumentException();
@@ -41,10 +41,10 @@ public class LoginService {
 			boolean validPassword = passwordEncoder.matches(loginDto.getSenha(), u.getSenha());
 			
 			if (validPassword) {
-				return u;
+				return true;
 			}
 		}
-		return null;
+		return false;
 	}
 	
 	public Usuario efetuarLogin(LoginDto loginDto) {
