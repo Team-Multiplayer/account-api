@@ -53,20 +53,22 @@ public class LancamentoService {
 	public void novoLancamento(LancamentoDto lancamentoDto) {
 
 		// valida os campos passados
-		if (lancamentoDto.getNumeroConta() == null || lancamentoDto.getValor() == null || lancamentoDto.getValor() < 0
+		System.out.println(lancamentoDto.toString());
+		
+		if (lancamentoDto.getNumeroContaUsuario() == null || lancamentoDto.getValor() == null || lancamentoDto.getValor() < 0
 				|| lancamentoDto.getDescricao() == null || lancamentoDto.getTipo() == null
 				|| lancamentoDto.getCategoria() == null) {
 			throw new IllegalArgumentException();
 		}
 		// se for transferência precisa da conta de destino
-		if (lancamentoDto.getTipo() == TipoLancamento.TRANSFERENCIA && lancamentoDto.getNumeroConta() == null) {
+		if (lancamentoDto.getTipo() == TipoLancamento.TRANSFERENCIA && lancamentoDto.getNumeroContaDestino() == null) {
 			throw new IllegalArgumentException();
 		}
 
-		Optional<PlanoConta> pc = repoPlanoConta.findById(lancamentoDto.getCategoria().getId());
+		Optional<PlanoConta> pc = repoPlanoConta.findById(lancamentoDto.getCategoria());
 
 		// busca a conta
-		List<Conta> c = repoConta.findByNumero(lancamentoDto.getNumeroConta());
+		List<Conta> c = repoConta.findByNumero(lancamentoDto.getNumeroContaUsuario());
 		// se não achou a conta
 		if (c == null) {
 			throw new IllegalArgumentException();
@@ -78,21 +80,23 @@ public class LancamentoService {
 		// cria o lançamento
 		Lancamento l = new Lancamento();
 		l.setData(LocalDate.now());
-		l.setNumeroConta(contaUsuario.getNumero());
+		l.setNumeroContaUsuario(contaUsuario.getNumero());
 		l.setValor(lancamentoDto.getValor());
 		l.setDescricao(lancamentoDto.getDescricao());
 		l.setTipo(lancamentoDto.getTipo());
 		l.setCategoria(pc.get());
+		l.setConta(contaUsuario);
 
 		if (lancamentoDto.getTipo() == TipoLancamento.TRANSFERENCIA) {
 			// pega a conta de destino
-			List<Conta> listaContaDestino = repoConta.findByNumero(lancamentoDto.getContaDestino());
+			List<Conta> listaContaDestino = repoConta.findByNumero(lancamentoDto.getNumeroContaDestino());
 			// se não achou a conta
 			if (listaContaDestino == null) {
 				throw new IllegalArgumentException();
 			}
 			// pega a conta destino
 			Conta contaDestino = listaContaDestino.get(0);
+			l.setNumeroContaDestino(contaDestino.getNumero());
 			// faz a transferência
 			if (temSaldoSuficiente(contaUsuario, lancamentoDto.getValor())) {
 				// TODO inicio transação
@@ -122,7 +126,6 @@ public class LancamentoService {
 				throw new SaldoInsuficienteException();
 			}
 		}
-
 	}
 
 	private Boolean temSaldoSuficiente(Conta conta, Double valor) {
@@ -132,5 +135,4 @@ public class LancamentoService {
 		}
 		return true;
 	}
-
 }

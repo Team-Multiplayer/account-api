@@ -6,6 +6,10 @@ public class DashboardDto {
 	private Conta contaBanco;
 	private Conta contaCredito;
 	
+	public DashboardDto() {
+		
+	}
+	
 	public DashboardDto(Conta contaBanco, Conta contaCredito) {
 		super();
 		this.contaBanco = contaBanco;

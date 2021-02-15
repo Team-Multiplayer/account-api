@@ -43,29 +43,4 @@ public class LoginService {
 		}
 		return null;
 	}
-	
-	public Usuario efetuarLogin(LoginDto loginDto) {
-		
-		if (loginDto.getLogin() == null || loginDto.getSenha() == null) {
-			throw new IllegalArgumentException();
-		}
-		
-		// busca usuário por login
-		List<Usuario> lu = repoUsuario.findByLogin(loginDto.getLogin());
-		// se retorno algum usuário
-		if (!lu.isEmpty()) {
-			// pega o usuário retornado
-			Usuario u = lu.get(0);
-			// compara a senha passada com a senha do usuário cadastrado
-			// TODO hash da senha
-			
-			String hashedPassword = passwordEncoder.encode(loginDto.getSenha());
-			
-			if (u.getSenha().equals(hashedPassword)) {
-				return u;
-			}
-		}
-		
-		throw new LoginOuSenhaInvalidosException();
-	}
 }

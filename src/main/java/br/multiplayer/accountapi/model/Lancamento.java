@@ -12,16 +12,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.multiplayer.accountapi.enums.TipoLancamento;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class Lancamento {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@Column(nullable = false, length = 20)
-	private String numeroConta; // alterado para integer
+	private String numeroContaUsuario;
 	
 	@Column(nullable = false, length = 10)
 	private LocalDate data;
@@ -33,7 +37,7 @@ public class Lancamento {
 	private String descricao;
 	
 	@Column(nullable = true, length = 20)
-	private String contaDestino;
+	private String numeroContaDestino;
 	
 	@Column(nullable = false)
 	private TipoLancamento tipo;
@@ -53,12 +57,12 @@ public class Lancamento {
 		return id;
 	}
 
-	public String getNumeroConta() {//alterado para integer
-		return numeroConta;
+	public String getNumeroContaUsuario() {
+		return numeroContaUsuario;
 	}
 
-	public void setNumeroConta(String numeroConta) {//alterado para integer
-		this.numeroConta = numeroConta;
+	public void setNumeroContaUsuario(String numeroContaUsuario) {
+		this.numeroContaUsuario = numeroContaUsuario;
 	}
 
 	public LocalDate getData() {
@@ -85,12 +89,12 @@ public class Lancamento {
 		this.descricao = descricao;
 	}
 
-	public String getContaDestino() {
-		return contaDestino;
+	public String getNumeroContaDestino() {
+		return numeroContaDestino;
 	}
 
-	public void setContaDestino(String contaDestino) {
-		this.contaDestino = contaDestino;
+	public void setNumeroContaDestino(String numeroContaDestino) {
+		this.numeroContaDestino = numeroContaDestino;
 	}
 
 	public TipoLancamento getTipo() {
@@ -108,4 +112,18 @@ public class Lancamento {
 	public void setCategoria(PlanoConta categoria) {
 		this.categoria = categoria;
 	}
+
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	
 }
