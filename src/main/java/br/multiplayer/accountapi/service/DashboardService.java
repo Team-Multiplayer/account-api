@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.multiplayer.accountapi.dto.LoginDto;
+import br.multiplayer.accountapi.dto.DashboardDto;
 import br.multiplayer.accountapi.model.Conta;
 import br.multiplayer.accountapi.model.Usuario;
 import br.multiplayer.accountapi.repository.UsuarioRepository;
@@ -16,20 +16,16 @@ public class DashboardService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
-//	public List<Conta> getUserDashboard(LoginDto loginDto) {
-//		
-//		List<Usuario> usuario = usuarioRepository.findByLogin(loginDto.getLogin());
-//		
-//		if (usuario != null) {
-//			
-//			Usuario usuarioDash = usuario.get(0);
-//			
-//			
-//			usuarioDash.setContas(null);
-//			return null;
-//		}
+	public DashboardDto getUsuarioDash(String login) {
+		DashboardDto dashboard = new DashboardDto();
+		List<Usuario> usuarios = usuarioRepository.findByLogin(login);
 		
+		if (usuarios != null) {
+			Usuario usuario = usuarios.get(0);
+			dashboard.setContaBanco(usuario.getContaCorrente());
+			dashboard.setContaCredito(usuario.getContaCredito());
+		}
 		
-		
-//	}
+		return dashboard;
+	}
 }

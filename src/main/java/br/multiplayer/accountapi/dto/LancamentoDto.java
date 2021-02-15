@@ -16,35 +16,35 @@ import br.multiplayer.accountapi.model.Conta;
 import br.multiplayer.accountapi.model.PlanoConta;
 
 public class LancamentoDto {
-	private String numeroConta;
+	private String numeroContaUsuario;
 	private Double valor;
 	private String descricao;
 	private TipoLancamento tipo;
-	private PlanoConta categoria;
-	private String contaDestino;
+	private Integer categoria;
+	private String numeroContaDestino;
 	
 //	Default constructor
 	public LancamentoDto() {
 		
 	}
 	
-	public LancamentoDto(String numeroConta, Double valor, String descricao,
-			String contaDestino, TipoLancamento tipo, PlanoConta categoria) {
+	public LancamentoDto(String numeroContaUsuario, Double valor, String descricao,
+			String numeroContaDestino, TipoLancamento tipo, Integer categoria) {
 		super();
-		this.numeroConta = numeroConta;
+		this.numeroContaUsuario = numeroContaUsuario;
 		this.valor = valor;
 		this.descricao = descricao;
-		this.contaDestino = contaDestino;
+		this.numeroContaDestino = numeroContaDestino;
 		this.tipo = tipo;
 		this.categoria = categoria;
 	}
 
-	public String getNumeroConta() {
-		return numeroConta;
+	public String getNumeroContaUsuario() {
+		return numeroContaUsuario;
 	}
 
-	public void setNumeroConta(String numeroConta) {
-		this.numeroConta = numeroConta;
+	public void setNumeroContaUsuario(String numeroContaUsuario) {
+		this.numeroContaUsuario = numeroContaUsuario;
 	}
 
 	public Double getValor() {
@@ -63,14 +63,6 @@ public class LancamentoDto {
 		this.descricao = descricao;
 	}
 
-	public String getContaDestino() {
-		return contaDestino;
-	}
-
-	public void setContaDestino(String contaDestino) {
-		this.contaDestino = contaDestino;
-	}
-
 	public TipoLancamento getTipo() {
 		return tipo;
 	}
@@ -79,14 +71,28 @@ public class LancamentoDto {
 		this.tipo = tipo;
 	}
 
-	public PlanoConta getCategoria() {
+	public Integer getCategoria() {
 		return categoria;
 	}
 
-	public void setCategoria(PlanoConta categoria) {
+	public void setCategoria(Integer categoria) {
 		this.categoria = categoria;
 	}
-	
+
+	public String getNumeroContaDestino() {
+		return numeroContaDestino;
+	}
+
+	public void setNumeroContaDestino(String numeroContaDestino) {
+		this.numeroContaDestino = numeroContaDestino;
+	}
+
+	@Override
+	public String toString() {
+		return "LancamentoDto [numeroContaUsuario=" + numeroContaUsuario + ", valor=" + valor + ", descricao="
+				+ descricao + ", tipo=" + tipo + ", categoria=" + categoria + ", numeroContaDestino="
+				+ numeroContaDestino + "]";
+	}
 	
 	
 	

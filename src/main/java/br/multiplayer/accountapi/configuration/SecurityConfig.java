@@ -57,10 +57,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET,"/api/usuario").permitAll()
         .antMatchers(HttpMethod.GET,"/master/*").permitAll()
         .antMatchers(HttpMethod.GET,"/api/*").permitAll()
+        .antMatchers(HttpMethod.GET,"/api/dashboard/*").permitAll()
         .anyRequest().authenticated();
         
         
-//        .and().csrf().ignoringAntMatchers("/h2/**")
+//       	.and().csrf().ignoringAntMatchers("/h2/**")
 //        .and().headers().frameOptions().sameOrigin();
        
     }
