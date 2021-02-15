@@ -17,8 +17,8 @@ public class DashboardController {
 	@Autowired
 	private DashboardService dashboardService;
 	
-//	@GetMapping
-//	public void getDashboard(@Validated LoginDto loginDto) {
-//		return dasboardService.
-//	}
+	@GetMapping
+	public String getDashboard(@Validated LoginDto loginDto) {
+		return "dash ok";
+	}
 }
