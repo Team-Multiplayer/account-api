@@ -25,6 +25,8 @@ import br.multiplayer.accountapi.exception.LoginOuSenhaInvalidosException;
 @DataJpaTest
 class LoginTest {
 	
+	/*
+	
 	@TestConfiguration
 	static class LoginTestConfiguration {
 		@Bean
@@ -120,4 +122,5 @@ class LoginTest {
 		});
 	}
 
+	*/
 }

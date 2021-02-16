@@ -21,6 +21,7 @@ import br.multiplayer.accountapi.enums.TipoConta;
 import br.multiplayer.accountapi.exception.LoginJaCadastradoException;
 import br.multiplayer.accountapi.model.Conta;
 import br.multiplayer.accountapi.model.Usuario;
+import br.multiplayer.accountapi.repository.ContaRepository;
 import br.multiplayer.accountapi.repository.UsuarioRepository;
 
 @Service
@@ -35,6 +36,9 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository repoUsuario;
 	
+	@Autowired
+	private ContaRepository repoConta;
+
 	public List<Usuario> buscarTodos() {
 		return repoUsuario.findAll();
 	}
@@ -43,8 +47,8 @@ public class UsuarioService {
 		return repoUsuario.findById(id);
 	}
 
-	public List<Usuario> buscaPorLogin(String login) {
-		return repoUsuario.findByLogin(login);
+	public Optional<Usuario> buscaPorLogin(String login) {
+		return repoUsuario.findFirstByLogin(login);
 	}
 	
 	public Usuario cadastrarUsuario(Usuario usuario) {
@@ -64,7 +68,7 @@ public class UsuarioService {
 		}
 		
 		// busca um usuário com o login passado
-		if (!repoUsuario.findByLogin(usuario.getLogin()).isEmpty()) {
+		if (repoUsuario.findFirstByLogin(usuario.getLogin()).isPresent()) {
 			// se encontrou um usuário
 			// lançar uma exceção
 			throw new LoginJaCadastradoException();
@@ -74,11 +78,20 @@ public class UsuarioService {
 		
 		String hashedPassword = passwordEncoder.encode(usuario.getSenha());
 		usuario.setSenha(hashedPassword);
-		usuario.setContaCorrente(new Conta(usuario.getLogin(), TipoConta.CORRENTE));
-		usuario.setContaCredito(new Conta(usuario.getLogin() + "1", TipoConta.CREDITO));
 		
 		// se tudo correu bem cria o usuário
 		// salva no repositório
-		return repoUsuario.save(usuario);
+		usuario = repoUsuario.save(usuario);
+
+		// cria as contas iniciais
+		Conta contaCorrente = new Conta(usuario.getLogin(), TipoConta.CORRENTE);
+		contaCorrente.setUsuarioId(usuario.getId());
+		repoConta.save(contaCorrente);
+		
+		Conta contaCredito = new Conta(usuario.getLogin(), TipoConta.CREDITO);
+		contaCredito.setUsuarioId(usuario.getId());
+		repoConta.save(contaCredito);
+		
+		return usuario;
 	}
 }

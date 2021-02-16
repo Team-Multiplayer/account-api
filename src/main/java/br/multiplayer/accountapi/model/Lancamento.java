@@ -18,7 +18,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import br.multiplayer.accountapi.enums.TipoLancamento;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class Lancamento {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,9 +45,8 @@ public class Lancamento {
     @JoinColumn(name = "categoria", referencedColumnName = "id")
 	private PlanoConta categoria;
 	
-	@ManyToOne
-    @JoinColumn(name="conta_id", nullable=false)
-	private Conta conta;
+	@Column(name="conta_id", nullable=false)
+	private Integer contaId;
 
 	// Default constructor
 	public Lancamento() {};
@@ -113,17 +111,16 @@ public class Lancamento {
 		this.categoria = categoria;
 	}
 
-	public Conta getConta() {
-		return conta;
-	}
-
-	public void setConta(Conta conta) {
-		this.conta = conta;
-	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
+	public Integer getContaId() {
+		return contaId;
+	}
+	
+	public void setContaId(Integer contaId) {
+		this.contaId = contaId;
+	}
 	
 }

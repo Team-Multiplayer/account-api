@@ -1,6 +1,7 @@
 package br.multiplayer.accountapi.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,13 +19,13 @@ public class DashboardService {
 	
 	public DashboardDto getUsuarioDash(String login) {
 		DashboardDto dashboard = new DashboardDto();
-		List<Usuario> usuarios = usuarioRepository.findByLogin(login);
+		Optional<Usuario> usuarios = usuarioRepository.findFirstByLogin(login);
 		
-		if (usuarios != null) {
-			Usuario usuario = usuarios.get(0);
-			dashboard.setContaBanco(usuario.getContaCorrente());
-			dashboard.setContaCredito(usuario.getContaCredito());
-		}
+//		if (usuarios != null) {
+//			Usuario usuario = usuarios.get(0);
+//			dashboard.setContaBanco(usuario.getContaCorrente());
+//			dashboard.setContaCredito(usuario.getContaCredito());
+//		}
 		
 		return dashboard;
 	}

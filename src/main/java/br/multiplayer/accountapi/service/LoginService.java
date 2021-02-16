@@ -1,6 +1,7 @@
 package br.multiplayer.accountapi.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,19 +29,21 @@ public class LoginService {
 		}
 		
 		// busca usuário por login
-		List<Usuario> lu = repoUsuario.findByLogin(loginDto.getLogin());
+		Optional<Usuario> usuarioPorLogin = repoUsuario.findFirstByLogin(loginDto.getLogin());
 		// se retorno algum usuário
-		if (!lu.isEmpty()) {
+		if (usuarioPorLogin.isPresent()) {
 			// pega o usuário retornado
-			Usuario u = lu.get(0);
+			Usuario usuario = usuarioPorLogin.get();
 			
 			// Comparação de senhas com BCrypt
-			boolean validPassword = passwordEncoder.matches(loginDto.getSenha(), u.getSenha());
+			boolean validPassword = passwordEncoder.matches(loginDto.getSenha(), usuario.getSenha());
 			
+			// se as senha são iguais retorna o usuário
 			if (validPassword) {
-				return u;
+				return usuario;
 			}
 		}
-		return null;
+		// senão acho o usuário ou a senha estiver errada
+		throw new LoginOuSenhaInvalidosException();
 	}
 }
