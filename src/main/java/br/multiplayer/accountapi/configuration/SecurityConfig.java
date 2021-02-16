@@ -59,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET,"/api/*").permitAll()
         .antMatchers(HttpMethod.GET,"/api/dashboard/*").permitAll()
         .antMatchers(HttpMethod.GET,"/api/conta/*").permitAll()
+        .antMatchers(HttpMethod.GET,"/api/conta/usuario/*").permitAll()
         .anyRequest().authenticated();
         
 //       	.and().csrf().ignoringAntMatchers("/h2/**")

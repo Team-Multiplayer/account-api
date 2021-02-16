@@ -16,6 +16,8 @@ public interface ContaRepository extends JpaRepository<Conta, Integer>{
 	List<Conta> findByNumero(String numero);
 	
 	Optional<Conta> findFirstByNumeroAndTipoConta(String numero, TipoConta tipoConta);
+	
+	List<Conta> findByUsuarioId(Integer usuarioId);
 
 
 }

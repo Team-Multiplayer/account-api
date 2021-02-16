@@ -52,4 +52,8 @@ public class ContaController {
 		}
 	}
 
+	@GetMapping("/usuario/{usuarioId}")
+	public List<Conta> getContaPorUsuarioId(@PathVariable(value="usuarioId") Integer usuarioId) {
+		return contaService.buscarPorUsuarioId(usuarioId);
+	}
 }

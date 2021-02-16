@@ -29,4 +29,7 @@ public class ContaService {
 		return repoConta.findFirstByNumeroAndTipoConta(numero, tipoConta);
 	}
 
+	public List<Conta> buscarPorUsuarioId(Integer usuarioId) {
+		return repoConta.findByUsuarioId(usuarioId);
+	}
 }
