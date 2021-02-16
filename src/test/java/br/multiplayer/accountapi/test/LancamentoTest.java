@@ -25,6 +25,8 @@ import br.multiplayer.accountapi.service.UsuarioService;
 @DataJpaTest
 class LancamentoTest {
 	
+	/*
+	
 	@TestConfiguration
 	static class LancamentoTestConfiguration {
 		@Bean
@@ -94,5 +96,7 @@ class LancamentoTest {
 		
 //		lancamentoService.novoLancamento(login, valor, descricao, tipo, null, contaDestino);
 	}
+	
+	*/
 
 }

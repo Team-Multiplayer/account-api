@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -15,7 +17,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import br.multiplayer.accountapi.enums.TipoConta;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"numero", "tipoConta"}, name = "conta_unique_key"))
 public class Conta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +30,10 @@ public class Conta {
 	private TipoConta tipoConta;
 	
 	@Column(nullable = false)
-	private Double saldo;
+	private Double saldo = 0D;
 
-	@OneToMany(mappedBy="conta")
-	private Set<Lancamento> lancamentos;
+	@Column(name="usuario_id", nullable=false)
+	private Integer usuarioId;
 	
 	// Default constructor
 	public Conta() {}
@@ -39,7 +41,6 @@ public class Conta {
 	public Conta(String numero, TipoConta tipo) {
 		this.numero = numero;
 		this.tipoConta = tipo;
-		this.saldo = 0D;
 	}
 	
 	public void debitar(Double valor) {
@@ -66,14 +67,6 @@ public class Conta {
 		this.numero = numero;
 	}
 
-	public Set<Lancamento> getLancamentos() {
-		return lancamentos;
-	}
-
-	public void setLancamentos(Set<Lancamento> lancamentos) {
-		this.lancamentos = lancamentos;
-	}
-
 	public TipoConta getTipoConta() {
 		return tipoConta;
 	}
@@ -82,5 +75,12 @@ public class Conta {
 		this.tipoConta = tipoConta;
 	}
 	
+	public Integer getUsuarioId() {
+		return usuarioId;
+	}
+	
+	public void setUsuarioId(Integer usuarioId) {
+		this.usuarioId = usuarioId;
+	}
 	
 }

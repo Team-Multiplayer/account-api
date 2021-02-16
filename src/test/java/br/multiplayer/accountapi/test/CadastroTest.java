@@ -28,6 +28,8 @@ import br.multiplayer.accountapi.service.UsuarioService;
 @DataJpaTest
 class CadastroTest {
 	
+	/*
+	
 	@TestConfiguration
 	static class CadastroTestConfiguration {
 		@Bean
@@ -156,4 +158,5 @@ class CadastroTest {
 		});
 	}
 
+	*/
 }

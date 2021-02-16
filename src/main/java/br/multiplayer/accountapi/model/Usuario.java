@@ -1,5 +1,7 @@
 package br.multiplayer.accountapi.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import br.multiplayer.accountapi.enums.TipoConta;
@@ -23,19 +26,26 @@ public class Usuario {
 	@Column(nullable = false, length = 11)
 	private String cpf;
 	
-	@Column(nullable = false, unique=true, length = 20)
+	@Column(nullable = false, unique = true, length = 20)
 	private String login;
 	
 	@Column(nullable = false)
 	private String senha;
 	
-	@OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "contaCorrente", referencedColumnName = "id")
-	private Conta contaCorrente;
+//	@OneToOne(cascade = CascadeType.PERSIST)
+//	@JoinColumn(name = "conta", referencedColumnName = "id")
+//	private Conta conta;
 	
-	@OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "contaCredito", referencedColumnName = "id")
-	private Conta contaCredito;
+//	@OneToMany(mappedBy="usuario")
+//	private List<Conta> contas;
+
+//	@OneToOne(cascade = CascadeType.PERSIST)
+//	@JoinColumn(name = "contaCorrente", referencedColumnName = "id")
+//	private Conta contaCorrente;
+	
+//	@OneToOne(cascade = CascadeType.PERSIST)
+//	@JoinColumn(name = "contaCredito", referencedColumnName = "id")
+//	private Conta contaCredito;
 	
 	// Default constructor
 	public Usuario () {}
@@ -50,8 +60,6 @@ public class Usuario {
 		this.cpf= cpf;
 		this.login = login;
 		this.senha = senha;
-		this.contaCorrente = new Conta(login, TipoConta.CORRENTE);
-		this.contaCredito = new Conta(login, TipoConta.CREDITO);
 	};
 	
 	public Integer getId() {
@@ -93,22 +101,5 @@ public class Usuario {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
-	public Conta getContaCorrente() {
-		return contaCorrente;
-	}
-	
-	public void setContaCorrente(Conta conta) {
-		this.contaCorrente = conta;
-	}
-	
-	public Conta getContaCredito() {
-		return contaCredito;
-	}
-	
-	public void setContaCredito(Conta conta) {
-		this.contaCredito = conta;
-	}
-	
 	
 }
