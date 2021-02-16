@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.multiplayer.accountapi.dto.LancamentoDto;
+import br.multiplayer.accountapi.enums.TipoConta;
 import br.multiplayer.accountapi.enums.TipoLancamento;
 import br.multiplayer.accountapi.exception.SaldoInsuficienteException;
 import br.multiplayer.accountapi.model.Conta;
@@ -55,7 +56,7 @@ public class LancamentoService {
 		// valida os campos passados
 		System.out.println(lancamentoDto.toString());
 		
-		if (lancamentoDto.getNumeroContaUsuario() == null || lancamentoDto.getValor() == null || lancamentoDto.getValor() < 0
+		if (lancamentoDto.getIdContaUsuario() == null || lancamentoDto.getValor() == null || lancamentoDto.getValor() < 0
 				|| lancamentoDto.getDescricao() == null || lancamentoDto.getTipo() == null
 				|| lancamentoDto.getCategoria() == null) {
 			throw new IllegalArgumentException();
@@ -68,43 +69,56 @@ public class LancamentoService {
 		Optional<PlanoConta> pc = repoPlanoConta.findById(lancamentoDto.getCategoria());
 
 		// busca a conta
-		List<Conta> c = repoConta.findByNumero(lancamentoDto.getNumeroContaUsuario());
+		Optional<Conta> c = repoConta.findById(lancamentoDto.getIdContaUsuario());
 		// se não achou a conta
-		if (c == null) {
+		if (c.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
 
 		// pega a conta do usuário
-		Conta contaUsuario = c.get(0);
+		Conta contaUsuario = c.get();
 
-		// cria o lançamento
-		Lancamento l = new Lancamento();
-		l.setData(LocalDate.now());
-		l.setNumeroContaUsuario(contaUsuario.getNumero());
-		l.setValor(lancamentoDto.getValor());
-		l.setDescricao(lancamentoDto.getDescricao());
-		l.setTipo(lancamentoDto.getTipo());
-		l.setCategoria(pc.get());
-		l.setConta(contaUsuario);
+		// cria o lançamento do usuário origem
+		Lancamento lancOrigem = new Lancamento();
+		lancOrigem.setData(LocalDate.now());
+		lancOrigem.setNumeroContaUsuario(contaUsuario.getNumero());
+		lancOrigem.setDescricao(lancamentoDto.getDescricao());
+		lancOrigem.setTipo(lancamentoDto.getTipo());
+		lancOrigem.setCategoria(pc.get());
+		lancOrigem.setContaId(contaUsuario.getId());
 
 		if (lancamentoDto.getTipo() == TipoLancamento.TRANSFERENCIA) {
 			// pega a conta de destino
-			List<Conta> listaContaDestino = repoConta.findByNumero(lancamentoDto.getNumeroContaDestino());
+			Optional<Conta> contaDestinoBuscada = repoConta.findFirstByNumeroAndTipoConta(lancamentoDto.getNumeroContaDestino(), lancamentoDto.getTipoContaDestino());
 			// se não achou a conta
-			if (listaContaDestino == null) {
+			if (contaDestinoBuscada.isEmpty()) {
 				throw new IllegalArgumentException();
 			}
 			// pega a conta destino
-			Conta contaDestino = listaContaDestino.get(0);
-			l.setNumeroContaDestino(contaDestino.getNumero());
+			Conta contaDestino = contaDestinoBuscada.get();
+			lancOrigem.setNumeroContaDestino(contaDestino.getNumero());
 			// faz a transferência
 			if (temSaldoSuficiente(contaUsuario, lancamentoDto.getValor())) {
+				
 				// TODO inicio transação
 				contaUsuario.debitar(lancamentoDto.getValor());
 				repoConta.save(contaUsuario);
 				contaDestino.creditar(lancamentoDto.getValor());
 				repoConta.save(contaUsuario);
-				repoLancamento.save(l);
+				
+				lancOrigem.setValor(-lancamentoDto.getValor());
+				repoLancamento.save(lancOrigem);
+				
+				Lancamento lancDestino = new Lancamento();
+				lancDestino.setData(LocalDate.now());
+				lancDestino.setNumeroContaUsuario(contaDestino.getNumero());
+				lancDestino.setValor(lancamentoDto.getValor());
+				lancDestino.setDescricao(lancamentoDto.getDescricao());
+				lancDestino.setTipo(lancamentoDto.getTipo());
+				lancDestino.setCategoria(pc.get());
+				lancDestino.setContaId(contaDestino.getId());
+				repoLancamento.save(lancDestino);
+
 				// fim transação
 			} else {
 				throw new SaldoInsuficienteException();
@@ -112,16 +126,18 @@ public class LancamentoService {
 		}
 
 		if (lancamentoDto.getTipo() == TipoLancamento.CREDITO) {
+			lancOrigem.setValor(lancamentoDto.getValor());
 			contaUsuario.creditar(lancamentoDto.getValor());
 			repoConta.save(contaUsuario);
-			repoLancamento.save(l);
+			repoLancamento.save(lancOrigem);
 		}
 
 		if (lancamentoDto.getTipo() == TipoLancamento.DEBITO) {
 			if (temSaldoSuficiente(contaUsuario, lancamentoDto.getValor())) {
+				lancOrigem.setValor(-lancamentoDto.getValor());
 				contaUsuario.debitar(lancamentoDto.getValor());
 				repoConta.save(contaUsuario);
-				repoLancamento.save(l);
+				repoLancamento.save(lancOrigem);
 			} else {
 				throw new SaldoInsuficienteException();
 			}
