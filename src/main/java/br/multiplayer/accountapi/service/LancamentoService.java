@@ -71,7 +71,7 @@ public class LancamentoService {
 		// busca a conta
 		Optional<Conta> c = repoConta.findById(lancamentoDto.getIdContaUsuario());
 		// se não achou a conta
-		if (c.isEmpty()) {
+		if (c == null) {
 			throw new IllegalArgumentException();
 		}
 
@@ -91,7 +91,7 @@ public class LancamentoService {
 			// pega a conta de destino
 			Optional<Conta> contaDestinoBuscada = repoConta.findFirstByNumeroAndTipoConta(lancamentoDto.getNumeroContaDestino(), lancamentoDto.getTipoContaDestino());
 			// se não achou a conta
-			if (contaDestinoBuscada.isEmpty()) {
+			if (contaDestinoBuscada == null) {
 				throw new IllegalArgumentException();
 			}
 			// pega a conta destino

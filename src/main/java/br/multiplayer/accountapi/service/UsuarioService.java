@@ -68,7 +68,7 @@ public class UsuarioService {
 		}
 		
 		// busca um usuário com o login passado
-		if (repoUsuario.findFirstByLogin(usuario.getLogin()).isPresent()) {
+		if (repoUsuario.findFirstByLogin(usuario.getLogin()) != null) {
 			// se encontrou um usuário
 			// lançar uma exceção
 			throw new LoginJaCadastradoException();

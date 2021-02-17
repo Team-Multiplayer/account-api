@@ -14,18 +14,23 @@ import br.multiplayer.accountapi.model.Lancamento;
 import br.multiplayer.accountapi.service.LancamentoService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/lancamento")
 public class LancamentoController {
 
 	@Autowired
 	LancamentoService lancamentoService;
 	
-	@GetMapping("/lancamento")
+	@GetMapping
 	public List<Lancamento> getLancamentos() {
 		return lancamentoService.buscarTodos();
 	}
+
+//	@GetMapping
+//	public List<Lancamento> getLancamentosPorConta() {
+//		return lancamentoService.();
+//	}
 	
-	@PostMapping("/lancamento")
+	@PostMapping
 	public void realizarLancamento(@RequestBody LancamentoDto lancamentoDto) {
 		
 		 lancamentoService.novoLancamento(lancamentoDto);

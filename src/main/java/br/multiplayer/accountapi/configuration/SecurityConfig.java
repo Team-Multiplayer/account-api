@@ -40,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
     public void configure(HttpSecurity http) throws Exception {
+		
 		http.cors().and().csrf().ignoringAntMatchers("/h2/**").disable()
 		.addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
 		.authorizeRequests()
@@ -52,6 +53,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and().headers().frameOptions().sameOrigin();
 //		.antMatchers("/").permitAll()
 
+        
+//       	.and().csrf().ignoringAntMatchers("/h2/**")
+//        .and().headers().frameOptions().sameOrigin();
        
     }
 	

@@ -47,7 +47,6 @@ public class ContaController {
 		if (conta.isPresent()) {
 			return ResponseEntity.ok().body(conta.get());
 		} else {
-
 			return ResponseEntity.notFound().build();
 		}
 	}
