@@ -151,7 +151,7 @@ da mesma além do Spring Security para configurações internas de BackEnd.
 Ao criar o usuário, o sistema de login fica disponível, habilitando o acesso pelo 
 endpoint 
 
-![Imagem Insomnia](./imagem/login-endpoint.jpg "Imagem Insomnia")
+![Imagem Insomnia](./images/login-endpoint.jpg "Imagem Insomnia")
 
 
 Após o login o endpoint retornará uma resposta contendo os dados de autenticação, 
