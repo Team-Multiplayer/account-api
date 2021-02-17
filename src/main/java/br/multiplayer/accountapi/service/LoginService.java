@@ -1,17 +1,25 @@
 package br.multiplayer.accountapi.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.multiplayer.accountapi.configuration.JWTConstants;
 import br.multiplayer.accountapi.dto.LoginDto;
+import br.multiplayer.accountapi.dto.SessaoDto;
 import br.multiplayer.accountapi.exception.LoginOuSenhaInvalidosException;
 import br.multiplayer.accountapi.model.Conta;
 import br.multiplayer.accountapi.model.Usuario;
 import br.multiplayer.accountapi.repository.UsuarioRepository;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class LoginService {
@@ -22,7 +30,7 @@ public class LoginService {
 	@Autowired
 	private UsuarioRepository repoUsuario;
 
-	public Usuario validarLogin(LoginDto loginDto) {
+	public SessaoDto validarLogin(LoginDto loginDto) {
 		
 		if (loginDto.getLogin() == null || loginDto.getSenha() == null) {
 			throw new IllegalArgumentException();
@@ -38,12 +46,36 @@ public class LoginService {
 			// Comparação de senhas com BCrypt
 			boolean validPassword = passwordEncoder.matches(loginDto.getSenha(), usuario.getSenha());
 			
-			// se as senha são iguais retorna o usuário
-			if (validPassword) {
-				return usuario;
+			if (!validPassword) {
+				throw new RuntimeException("Senha inválida para o login: " + loginDto.getLogin());
 			}
+			
+			// Geração do JWT
+			long tempoToken = 1 * 60 * 60 * 1000;
+			SessaoDto sessao = new SessaoDto();
+			
+			sessao.setDataInicio(new Date(System.currentTimeMillis()));
+			sessao.setDataFim(new Date(System.currentTimeMillis() + tempoToken));
+			sessao.setLogin(usuario.getLogin());
+			sessao.setToken(JWTConstants.PREFIX + getJWTToken(sessao));
+
+			return sessao;
+			
 		}
-		// senão acho o usuário ou a senha estiver errada
+		// se não acho o usuário ou a senha estiver errada
 		throw new LoginOuSenhaInvalidosException();
+	}
+	
+	private String getJWTToken(SessaoDto sessao) {
+		String role = "ROLE_USER";
+		List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(role);
+
+		String token = Jwts.builder().setSubject(sessao.getLogin())
+				.claim("authorities",
+						grantedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+				.setIssuedAt(sessao.getDataInicio()).setExpiration(sessao.getDataFim())
+				.signWith(SignatureAlgorithm.HS512, JWTConstants.KEY.getBytes()).compact();
+
+		return token;
 	}
 }
