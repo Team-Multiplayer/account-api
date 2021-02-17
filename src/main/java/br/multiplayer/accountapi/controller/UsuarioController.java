@@ -44,7 +44,7 @@ public class UsuarioController {
 		}
 	}
 	
-	@PostMapping("/cadastrar")
+	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Usuario createUser(@Validated @RequestBody Usuario usuario) {
 		
