@@ -2,13 +2,13 @@
 
 ## Time Multiplayer
 - [Danilo Elias](https://github.com/danilose)
-Ajudou no desenvolvimento da modelagem e implementação dos Services e Models.
+Ajudou no desenvolvimento da modelagem e implementação dos Services, Models, Endpoints e configurações de segurança.
 - [Lucas Villarim](https://github.com/LucasVillarim)
-Ajudou no desenvolvimento da modelagem e implementação dos Services e Models.
+Ajudou no desenvolvimento da modelagem e implementação dos Services, Models, Endpoints e configurações de segurança.
 - [Luciano Faria](https://github.com/lucianofa)
 Ajudou no desenvolvimento da modelagem e entendimento dos requisitos.
 - [Mathias Ribeiro](https://github.com/ribeiromathias)
-Ajudou no desenvolvimento da modelagem e está focado no desenvolvimento da parte web em HTML, CSS e JavaScript
+Ajudou no desenvolvimento da modelagem e entendimento dos requisitos.
 
 ## Modelagem inicial
 ![Diagrama Classes inicial](./Diagrama-Classes-AccountBank.png "Diagrama de Classes inicial")
