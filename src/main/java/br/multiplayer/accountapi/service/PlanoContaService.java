@@ -24,6 +24,10 @@ public class PlanoContaService {
 	public Optional<PlanoConta> buscarPorId(Integer id) {
 		return repoPlanoConta.findById(id);
 	}
+	
+	public List<PlanoConta> buscarPorUsuarioId(Integer usuarioId) {
+		return repoPlanoConta.findByUsuarioId(usuarioId);
+	}
 
 	public PlanoConta cadastrarPlanoConta(PlanoContaDto planoContaDto) {
 		

@@ -18,10 +18,13 @@ import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
 import br.multiplayer.accountapi.enums.TipoConta;
+import br.multiplayer.accountapi.enums.TipoPlanoConta;
 import br.multiplayer.accountapi.exception.LoginJaCadastradoException;
 import br.multiplayer.accountapi.model.Conta;
+import br.multiplayer.accountapi.model.PlanoConta;
 import br.multiplayer.accountapi.model.Usuario;
 import br.multiplayer.accountapi.repository.ContaRepository;
+import br.multiplayer.accountapi.repository.PlanoContaRepository;
 import br.multiplayer.accountapi.repository.UsuarioRepository;
 
 @Service
@@ -38,6 +41,9 @@ public class UsuarioService {
 	
 	@Autowired
 	private ContaRepository repoConta;
+
+	@Autowired
+	private PlanoContaRepository repoPlanoConta;
 
 	public List<Usuario> buscarTodos() {
 		return repoUsuario.findAll();
@@ -75,15 +81,13 @@ public class UsuarioService {
 			throw new LoginJaCadastradoException();
 		}
 
-		// TODO hash da senha
-		
 		String hashedPassword = passwordEncoder.encode(usuario.getSenha());
 		usuario.setSenha(hashedPassword);
 		
 		// se tudo correu bem cria o usuário
 		// salva no repositório
 		usuario = repoUsuario.save(usuario);
-
+		
 		// cria as contas iniciais
 		Conta contaCorrente = new Conta(usuario.getLogin(), TipoConta.CORRENTE);
 		contaCorrente.setUsuarioId(usuario.getId());
@@ -92,6 +96,11 @@ public class UsuarioService {
 		Conta contaCredito = new Conta(usuario.getLogin(), TipoConta.CREDITO);
 		contaCredito.setUsuarioId(usuario.getId());
 		repoConta.save(contaCredito);
+		
+		// cria um plano de conta inicial
+		PlanoConta pc = new PlanoConta("Salário", TipoPlanoConta.R);
+		pc.setUsuarioId(usuario.getId());
+		repoPlanoConta.save(pc);
 		
 		return usuario;
 	}

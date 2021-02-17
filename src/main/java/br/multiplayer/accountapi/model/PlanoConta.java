@@ -20,6 +20,17 @@ public class PlanoConta {
 	@Column(nullable = false, length = 100)
 	private String descricao;
 	
+	@Column(name="usuario_id", nullable=false)
+	private Integer usuarioId;
+	
+	public Integer getUsuarioId() {
+		return usuarioId;
+	}
+
+	public void setUsuarioId(Integer usuarioId) {
+		this.usuarioId = usuarioId;
+	}
+
 	// Default constructor
 	public PlanoConta() {}
 	
