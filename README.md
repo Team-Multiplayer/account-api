@@ -172,22 +172,22 @@ da opção, a conta destino terá o saldo alterado.
 Listamos os usuários para ver as possíveis conexões durante uma transação. 
 Nota-se que o JWT já está sendo requisitado. 
 
-![Diagrama Classes inicial](./listagem-usuarios.png "Diagrama de Classes inicial")
+![Imagem Insomnia](./images/listagem-usuarios.png "Imagem insomnia")
 
 requisitamos o endpoint de "/contas" para checar o saldo inicial.
 
-![Diagrama Classes inicial](./checagem-contas.png "Diagrama de Classes inicial")
+![Imagem Insomnia](./images/checagem-contas.png "Imagem Insomnia")
 
 Preparamos o corpo da requisição e enviamos a transação colocando o id da conta que 
 desejamos creditar, o campo contaDestino só tera relevância caso a transação seja "Transferência", 
 neste caso deixaremos vazio.
 
-![Diagrama Classes inicial](./lancamento-endpoint.png "Diagrama de Classes inicial")
+![Imagem Insomnia](./images/lancamento-endpoint.png "Imagem Insomnia")
 
 Tendo sucesso no envio, requisitamos o endpoint referente as contas de um usuário 
 para checagem do saldo novamente.
 
-![Diagrama Classes inicial](./checagem-contas-final.png "Diagrama de Classes inicial")
+![Imagem Insomnia](./images/checagem-contas-final.png "Imagem Insomnia")
 
 Por fim percebe-se que a conta foi creditada e todas as operações foram realizadas 
 apenas por causa da autenticação do JWT.
