@@ -3,28 +3,28 @@ package br.multiplayer.accountapi.dto;
 import br.multiplayer.accountapi.model.Conta;
 
 public class DashboardDto {
-	private Conta contaBanco;
-	private Conta contaCredito;
+	private ContaDto contaCorrente;
+	private ContaDto contaCredito;
 	
 	public DashboardDto() {
 		
 	}
 	
-	public DashboardDto(Conta contaBanco, Conta contaCredito) {
+	public DashboardDto(ContaDto contaCorrente, ContaDto contaCredito) {
 		super();
-		this.contaBanco = contaBanco;
+		this.contaCorrente = contaCorrente;
 		this.contaCredito = contaCredito;
 	}
-	public Conta getContaBanco() {
-		return contaBanco;
+	public ContaDto getContaCorrente() {
+		return contaCorrente;
 	}
-	public void setContaBanco(Conta contaBanco) {
-		this.contaBanco = contaBanco;
+	public void setContaCorrente(ContaDto contaCorrente) {
+		this.contaCorrente = contaCorrente;
 	}
-	public Conta getContaCredito() {
+	public ContaDto getContaCredito() {
 		return contaCredito;
 	}
-	public void setContaCredito(Conta contaCredito) {
+	public void setContaCredito(ContaDto contaCredito) {
 		this.contaCredito = contaCredito;
 	}
 	

@@ -2,7 +2,10 @@ package br.multiplayer.accountapi.dto;
 
 import java.util.Date;
 
+import br.multiplayer.accountapi.model.Usuario;
+
 public class SessaoDto {
+	private Usuario usuario;
 	private String login;
 	private String token;
 	private Date dataInicio;
@@ -13,12 +16,21 @@ public class SessaoDto {
 		
 	}
 	
-	public SessaoDto(String login, String token, Date dataInicio, Date dataFim) {
+	public SessaoDto(Usuario usuario, String login, String token, Date dataInicio, Date dataFim) {
 		super();
+		this.usuario = usuario;
 		this.login = login;
 		this.token = token;
 		this.dataInicio = dataInicio;
 		this.dataFim = dataFim;
+	}
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	
 	public String getLogin() {

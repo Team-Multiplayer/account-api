@@ -58,6 +58,8 @@ public class LoginService {
 			sessao.setDataFim(new Date(System.currentTimeMillis() + tempoToken));
 			sessao.setLogin(usuario.getLogin());
 			sessao.setToken(JWTConstants.PREFIX + getJWTToken(sessao));
+			usuario.setSenha(null);
+			sessao.setUsuario(usuario);
 
 			return sessao;
 			
