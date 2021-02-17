@@ -30,7 +30,8 @@ public class PlanoContaController {// faz de conta que é categoria
 	@GetMapping("/usuario/{usuarioId}")
 	public List<PlanoConta> busrcarPorUsuarioId(@PathVariable(value="usuarioId") Integer usuarioId) {
 		return planoContaService.buscarPorUsuarioId(usuarioId);
-	}	
+	}
+	
 	@PostMapping
 	public PlanoConta criaPlanoConta(@RequestBody PlanoContaDto planoContaDto) {
 		return planoContaService.cadastrarPlanoConta(planoContaDto);
