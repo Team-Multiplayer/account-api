@@ -67,14 +67,14 @@ public class LancamentoService {
 		// busca o plano conta
 		Optional<PlanoConta> pc = repoPlanoConta.findById(lancamentoDto.getCategoria());
 		// se não achou o plano conta
-		if (pc.isEmpty()) {
+		if (!pc.isPresent()) {
 			throw new IllegalArgumentException();
 		}
 
 		// busca a conta
 		Optional<Conta> c = repoConta.findById(lancamentoDto.getIdContaUsuario());
 		// se não achou a conta
-		if (c.isEmpty()) {
+		if (!c.isPresent()) {
 			throw new IllegalArgumentException();
 		}
 
@@ -94,7 +94,7 @@ public class LancamentoService {
 			// pega a conta de destino
 			Optional<Conta> contaDestinoBuscada = repoConta.findFirstByNumeroAndTipoConta(lancamentoDto.getNumeroContaDestino(), lancamentoDto.getTipoContaDestino());
 			// se não achou a conta
-			if (contaDestinoBuscada.isEmpty()) {
+			if (!contaDestinoBuscada.isPresent()) {
 				throw new IllegalArgumentException();
 			}
 			// pega a conta destino
