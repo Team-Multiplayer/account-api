@@ -12,6 +12,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import br.multiplayer.accountapi.service.LoginService;
 
@@ -45,13 +48,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
 		.authorizeRequests()
 		.antMatchers(SWAGGER_WHITELIST).permitAll()
+		.antMatchers(HttpMethod.GET, "/api/usuario").permitAll()
 		.antMatchers(HttpMethod.POST, "/api/usuario").permitAll()
 		.antMatchers(HttpMethod.POST, "/api/login").permitAll()
 		.antMatchers("/h2/**").permitAll()
 		.anyRequest().authenticated()
        	.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and().headers().frameOptions().sameOrigin();
-       
+//		.antMatchers("/").permitAll()
+//		.and().csrf().ignoringAntMatchers("/h2/**")
+//		.and().headers().frameOptions().sameOrigin();
     }
+	
+//	bean para configuração do CORS em nível de Spring Security.
+	@Bean
+  CorsConfigurationSource corsConfigurationSource() {
+      UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+      source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+      return source;
+  }
+	
+//	@Autowired
+//  public void configAuthentication(AuthenticationManagerBuilder auth)
+//      throws Exception {
+//
+//      auth.jdbcAuthentication().dataSource(dataSource)
+//          .passwordEncoder(passwordEncoder())
+//          .usersByUsernameQuery("{SQL}") //SQL query
+//          .authoritiesByUsernameQuery("{SQL}"); //SQL query
+//  }
 	
 }
