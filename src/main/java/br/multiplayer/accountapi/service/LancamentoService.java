@@ -54,8 +54,6 @@ public class LancamentoService {
 	public void novoLancamento(LancamentoDto lancamentoDto) {
 
 		// valida os campos passados
-		System.out.println(lancamentoDto.toString());
-		
 		if (lancamentoDto.getIdContaUsuario() == null || lancamentoDto.getValor() == null || lancamentoDto.getValor() < 0
 				|| lancamentoDto.getDescricao() == null || lancamentoDto.getTipo() == null
 				|| lancamentoDto.getCategoria() == null) {
@@ -66,12 +64,17 @@ public class LancamentoService {
 			throw new IllegalArgumentException();
 		}
 
+		// busca o plano conta
 		Optional<PlanoConta> pc = repoPlanoConta.findById(lancamentoDto.getCategoria());
+		// se não achou o plano conta
+		if (pc.isEmpty()) {
+			throw new IllegalArgumentException();
+		}
 
 		// busca a conta
 		Optional<Conta> c = repoConta.findById(lancamentoDto.getIdContaUsuario());
 		// se não achou a conta
-		if (c == null) {
+		if (c.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
 
@@ -91,7 +94,7 @@ public class LancamentoService {
 			// pega a conta de destino
 			Optional<Conta> contaDestinoBuscada = repoConta.findFirstByNumeroAndTipoConta(lancamentoDto.getNumeroContaDestino(), lancamentoDto.getTipoContaDestino());
 			// se não achou a conta
-			if (contaDestinoBuscada == null) {
+			if (contaDestinoBuscada.isEmpty()) {
 				throw new IllegalArgumentException();
 			}
 			// pega a conta destino

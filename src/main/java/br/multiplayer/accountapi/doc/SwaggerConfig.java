@@ -53,12 +53,12 @@ public class SwaggerConfig {
 		 
 		ApiInfoBuilder apiInfoBuilder = new ApiInfoBuilder();
  
-		apiInfoBuilder.title("Gama Educação - API");
-		apiInfoBuilder.description("API Accenture Desafio Turma 1 e 2");
+		apiInfoBuilder.title("AccountBank - API");
+		apiInfoBuilder.description("API do banco AccountBank");
 		apiInfoBuilder.version("1.0");
-		apiInfoBuilder.termsOfServiceUrl("Termo de uso: Uso Gama Academy");
-		apiInfoBuilder.license("Licença - Gama Academy");
-		apiInfoBuilder.licenseUrl("https://gama.academy/");
+		apiInfoBuilder.termsOfServiceUrl("Termo de uso: Uso AccountBank");
+		apiInfoBuilder.license("Licença - AccountBank");
+		apiInfoBuilder.licenseUrl("https://github.com/Team-Multiplayer/account-api");
 		apiInfoBuilder.contact(this.contato());
  
 		return apiInfoBuilder;

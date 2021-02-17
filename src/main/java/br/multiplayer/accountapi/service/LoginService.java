@@ -39,7 +39,7 @@ public class LoginService {
 		// busca usuário por login
 		Optional<Usuario> usuarioPorLogin = repoUsuario.findFirstByLogin(loginDto.getLogin());
 		// se retorno algum usuário
-		if (usuarioPorLogin != null) {
+		if (usuarioPorLogin.isPresent()) {
 			// pega o usuário retornado
 			Usuario usuario = usuarioPorLogin.get();
 			

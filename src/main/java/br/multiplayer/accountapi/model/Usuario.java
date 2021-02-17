@@ -32,21 +32,6 @@ public class Usuario {
 	@Column(nullable = false)
 	private String senha;
 	
-//	@OneToOne(cascade = CascadeType.PERSIST)
-//	@JoinColumn(name = "conta", referencedColumnName = "id")
-//	private Conta conta;
-	
-//	@OneToMany(mappedBy="usuario")
-//	private List<Conta> contas;
-
-//	@OneToOne(cascade = CascadeType.PERSIST)
-//	@JoinColumn(name = "contaCorrente", referencedColumnName = "id")
-//	private Conta contaCorrente;
-	
-//	@OneToOne(cascade = CascadeType.PERSIST)
-//	@JoinColumn(name = "contaCredito", referencedColumnName = "id")
-//	private Conta contaCredito;
-	
 	// Default constructor
 	public Usuario () {}
 	

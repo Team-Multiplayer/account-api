@@ -51,30 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.anyRequest().authenticated()
        	.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and().headers().frameOptions().sameOrigin();
-//		.antMatchers("/").permitAll()
-
-        
-//       	.and().csrf().ignoringAntMatchers("/h2/**")
-//        .and().headers().frameOptions().sameOrigin();
        
     }
 	
-//	bean para configuração do CORS em nível de Spring Security.
-//	@Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-//        return source;
-//    }
-	
 }
-
-//	@Autowired
-//    public void configAuthentication(AuthenticationManagerBuilder auth)
-//        throws Exception {
-//
-//        auth.jdbcAuthentication().dataSource(dataSource)
-//            .passwordEncoder(passwordEncoder())
-//            .usersByUsernameQuery("{SQL}") //SQL query
-//            .authoritiesByUsernameQuery("{SQL}"); //SQL query
-//    }

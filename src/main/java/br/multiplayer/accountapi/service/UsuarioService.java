@@ -68,14 +68,6 @@ public class UsuarioService {
 		}
 		
 		// busca um usuário com o login passado
-//		Optional<Usuario> usuarioBuscado = repoUsuario.findFirstByLogin(usuario.getLogin());
-		// se encontrou um usuário
-//		if (usuarioBuscado.hashCode() != 0) {
-			// lançar uma exceção
-//			throw new LoginJaCadastradoException();
-//		}
-		
-		// busca um usuário com o login passado
 		Optional<Usuario> usuarioBuscado = repoUsuario.findFirstByLogin(usuario.getLogin());
 		// se encontrou um usuário
 		if (usuarioBuscado.isPresent()) {
