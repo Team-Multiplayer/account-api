@@ -43,7 +43,7 @@ public class DashboardService {
 			List<Lancamento> lancamentosContaCorrente = lancamentoRepository.findTop5ByContaIdOrderByDataDesc(ccorrente.getId());
 			ContaDto contaCorrente = new ContaDto(ccorrente, lancamentosContaCorrente);
 			
-			Optional<Conta> contaCreditoBuscada = contaRepository.findFirstByNumeroAndTipoConta(usuario.getLogin(), TipoConta.CORRENTE);
+			Optional<Conta> contaCreditoBuscada = contaRepository.findFirstByNumeroAndTipoConta(usuario.getLogin(), TipoConta.CREDITO);
 			Conta ccredito = contaCreditoBuscada.get();
 			List<Lancamento> lancamentosContaCredito = lancamentoRepository.findTop5ByContaIdOrderByDataDesc(ccredito.getId());
 			ContaDto contaCredito = new ContaDto(ccredito, lancamentosContaCredito);
