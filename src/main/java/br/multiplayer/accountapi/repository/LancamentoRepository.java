@@ -12,4 +12,5 @@ import br.multiplayer.accountapi.model.Lancamento;
 public interface LancamentoRepository extends JpaRepository<Lancamento, Integer> {
 	List<Lancamento> findAllByDataBetween(LocalDate inicio, LocalDate fim);
 	List<Lancamento> findTop10ByContaIdOrderByDataDesc(Integer contaId);
+	List<Lancamento> findAllByDataBetweenAndContaId(LocalDate inicio, LocalDate fim, Integer contaId);
 }

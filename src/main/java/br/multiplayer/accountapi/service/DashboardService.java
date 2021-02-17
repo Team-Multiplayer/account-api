@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import br.multiplayer.accountapi.dto.ContaDto;
 import br.multiplayer.accountapi.dto.DashboardDto;
+import br.multiplayer.accountapi.dto.ExtratoDto;
+import br.multiplayer.accountapi.dto.ExtratoRequestDto;
 import br.multiplayer.accountapi.enums.TipoConta;
 import br.multiplayer.accountapi.model.Conta;
 import br.multiplayer.accountapi.model.Lancamento;
@@ -54,4 +56,32 @@ public class DashboardService {
 		
 		return dashboard;
 	}
+
+	public ExtratoDto getExtrato(ExtratoRequestDto extratoRequestDto) {
+		
+		ExtratoDto extrato = new ExtratoDto();
+		
+		Optional<Usuario> usuarioBuscado = usuarioRepository.findFirstByLogin(extratoRequestDto.getLogin());
+		
+		if (usuarioBuscado.isPresent()) {
+
+			Usuario usuario = usuarioBuscado.get();
+			
+			Optional<Conta> contaCorrenteBuscada = contaRepository.findFirstByNumeroAndTipoConta(usuario.getLogin(), TipoConta.CORRENTE);
+			Conta ccorrente = contaCorrenteBuscada.get();
+			List<Lancamento> lancamentosContaCorrente = lancamentoRepository.findAllByDataBetweenAndContaId(extratoRequestDto.getInicio(), extratoRequestDto.getFim(), ccorrente.getId());
+			ContaDto contaCorrente = new ContaDto(ccorrente, lancamentosContaCorrente);
+			
+			Optional<Conta> contaCreditoBuscada = contaRepository.findFirstByNumeroAndTipoConta(usuario.getLogin(), TipoConta.CREDITO);
+			Conta ccredito = contaCreditoBuscada.get();
+			List<Lancamento> lancamentosContaCredito = lancamentoRepository.findAllByDataBetweenAndContaId(extratoRequestDto.getInicio(), extratoRequestDto.getFim(), ccredito.getId());
+			ContaDto contaCredito = new ContaDto(ccredito, lancamentosContaCredito);
+
+			extrato.setContaCorrente(contaCorrente);
+			extrato.setContaCredito(contaCredito);
+		}
+		
+		return extrato;
+	}
+
 }
