@@ -123,3 +123,71 @@ O service faz a validação do login do usuário no sistema.
 - DEBITO
 - CREDITO
 - TRANSFERENCIA
+
+
+# SPRING BOOT
+- A API será um Bankline com funcionalidades específicas, hospedada no Swagger 
+para apresentação do projeto final e posteriores checagens realizadas por terceiros.
+
+## Funcionalidades da API
+### Usuário
+- Criar
+- Logar
+- Listar
+
+## Banco
+### Transações bancárias
+- Pagamento
+- Depósito
+- Transferência
+- Listagem de transações
+
+#Implementações de segurança
+A api faz uso de Jason Web Token (JWT) para autenticação de endpoints durante o uso 
+da mesma além do Spring Security para configurações internas de BackEnd.
+
+# Como funciona?
+
+Ao criar o usuário, o sistema de login fica disponível, habilitando o acesso pelo 
+endpoint 
+
+![Diagrama Classes inicial](./login-endpoint.png "Diagrama de Classes inicial")
+
+
+Após o login o endpoint retornará uma resposta contendo os dados de autenticação, 
+contendo um token bearer que será filtrado pela implemetação do JWT no Java, o que 
+permitirá o acesso as demais funcionalidades.
+
+## Utilizando as transações
+
+Para realizar uma transação, a requisição deverá ser feita no endpoint "/lancamentos".
+
+Para se alternar entre os diferentes tipos de transações foi implementado um 
+sistema de Enum em que fica disponível para o usuário as opções de: Débito, Crédito 
+e Transferência. Para alternar, o usuário deve mudar o valor do campo "tipo". Dependendo 
+da opção, a conta destino terá o saldo alterado.
+
+## Demonstração de uma transação
+
+Listamos os usuários para ver as possíveis conexões durante uma transação. 
+Nota-se que o JWT já está sendo requisitado. 
+
+![Diagrama Classes inicial](./listagem-usuarios.png "Diagrama de Classes inicial")
+
+requisitamos o endpoint de "/contas" para checar o saldo inicial.
+
+![Diagrama Classes inicial](./checagem-contas.png "Diagrama de Classes inicial")
+
+Preparamos o corpo da requisição e enviamos a transação colocando o id da conta que 
+desejamos creditar, o campo contaDestino só tera relevância caso a transação seja "Transferência", 
+neste caso deixaremos vazio.
+
+![Diagrama Classes inicial](./lancamento-endpoint.png "Diagrama de Classes inicial")
+
+Tendo sucesso no envio, requisitamos o endpoint referente as contas de um usuário 
+para checagem do saldo novamente.
+
+![Diagrama Classes inicial](./checagem-contas-final.png "Diagrama de Classes inicial")
+
+Por fim percebe-se que a conta foi creditada e todas as operações foram realizadas 
+apenas por causa da autenticação do JWT.
