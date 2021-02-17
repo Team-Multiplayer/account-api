@@ -34,11 +34,13 @@ public class PlanoConta {
 	// Default constructor
 	public PlanoConta() {}
 	
-	public PlanoConta(String descricao, TipoPlanoConta tipo) {
-		this.descricao = descricao;
+	public PlanoConta(TipoPlanoConta tipo, String descricao, Integer usuarioId) {
+		super();
 		this.tipo = tipo;
+		this.descricao = descricao;
+		this.usuarioId = usuarioId;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}

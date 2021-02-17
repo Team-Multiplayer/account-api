@@ -98,8 +98,7 @@ public class UsuarioService {
 		repoConta.save(contaCredito);
 		
 		// cria um plano de conta inicial
-		PlanoConta pc = new PlanoConta("Salário", TipoPlanoConta.R);
-		pc.setUsuarioId(usuario.getId());
+		PlanoConta pc = new PlanoConta(TipoPlanoConta.R, "Salário", usuario.getId());
 		repoPlanoConta.save(pc);
 		
 		return usuario;

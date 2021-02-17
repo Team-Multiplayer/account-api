@@ -31,11 +31,11 @@ public class PlanoContaService {
 
 	public PlanoConta cadastrarPlanoConta(PlanoContaDto planoContaDto) {
 		
-		if (planoContaDto.getDescricao() == null || planoContaDto.getTipo() == null) {
+		if (planoContaDto.getDescricao() == null || planoContaDto.getTipo() == null || planoContaDto.getUsuarioId() == null) {
 			throw new IllegalArgumentException();
 		}
 		
-		PlanoConta pc = new PlanoConta(planoContaDto.getDescricao(), planoContaDto.getTipo());
+		PlanoConta pc = new PlanoConta(planoContaDto.getTipo(), planoContaDto.getDescricao(), planoContaDto.getUsuarioId());
 		return repoPlanoConta.save(pc);
 	}
 
