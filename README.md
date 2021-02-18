@@ -1,20 +1,25 @@
 # Projeto Account Java API
 
+API de um Bankline com cadastro de usuário, contas e lançamentos.
+A documentação da API pode ser acessada em [accountbank-api.herokuapp.com/swagger-ui.html](https://accountbank-api.herokuapp.com/swagger-ui.html)
+
 ## Time Multiplayer
 - [Danilo Elias](https://github.com/danilose)
 Ajudou no desenvolvimento da modelagem e implementação dos Services, Models, Endpoints e configurações de segurança.
 - [Lucas Villarim](https://github.com/LucasVillarim)
 Ajudou no desenvolvimento da modelagem e implementação dos Services, Models, Endpoints e configurações de segurança.
 
-## Modelagem inicial
-![Diagrama Classes inicial](.images/Diagrama-Classes-AccountBank.png "Diagrama de Classes inicial")
-
 ## Estrutura do Projeto
 Dividimos as classes em pacotes de acordo com suas responsabilidades.
 - Model: onde definimos os modelos ou seja as classes dos objetos que usamos no sistema
+- Repository: onde definimos o JPA para acessar os dados do BD
 - Service: onde definimos as regras de negócio para manipulação dos Models
-- Enums: onde definimos nossos Enums
-- Exception: onde definimos nossas Exeptions
+- Dto: onde definimos as classes em que serão consumidas e enviadas pelo frontend
+- Controller: também chamado de Resource foi onde definimos a interação do frontend com a API por meio da definição dos endpoints
+- Enums: onde definimos nossas enumerações
+- Exception: onde definimos nossas exceções
+- Doc: onde definimos as configurações do Swagger para documentar a API
+- Configuration: onde definimos as configurações de segurança do Spring Security e JWT
 
 ```
 📦src
@@ -90,11 +95,11 @@ Dividimos as classes em pacotes de acordo com suas responsabilidades.
 
 ## Usuário
 O model tem os atributos:
+- Id
 - Nome
 - CPF
 - Login
 - Senha
-- Conta
 
 Tem os getters e setter dos atributos.
 
@@ -105,54 +110,80 @@ O service faz as validações para criação do usuário.
 - O login não pode passar de 20 caracteres.
 - O cpf não pode passar de 11 caracteres.
 - Não pode cadastrar um usuário com um login já existente no sistema.
+- No cadastro de um novo usuário são criadas duas contas (Corrente e Crédito) além de um plano de conta (categoria) "Salário" do tipo "Receita"
+
+O Controller mapeia as rotas da API, que podem ser vistas com mais detalhes na [documentação](https://accountbank-api.herokuapp.com/swagger-ui.html) feita com o Swagger
 
 ## Conta
 O model tem os atributos:
+- Id
 - Número (é igual ao login do usuário)
 - Tipo ([TipoConta Enum](#tipoconta-enum))
 - Saldo
-- Lançamentos
+- Id Usuário
 
+Os atributos Número e Tipo são uma chave única.
+A conta é criada com o saldo 0.
 Tem os getters e setter dos atributos.
 
-Também tem um construtor que inicia o tipo com o [TipoConta.CORRENTE](#tipoconta-enum) e o saldo 0.
+O service faz as buscas necessárias como:
+- buscarPorId(Integer id)
+- buscaPorNumeroETipoConta(String numero, TipoConta tipoConta)
+- buscarPorUsuarioId(Integer usuarioId)
 
-No momento não tem um service pois a criação da conta somente se dá na criação de um usuário.
+O Controller mapeia as rotas da API, que podem ser vistas com mais detalhes na [documentação](https://accountbank-api.herokuapp.com/swagger-ui.html) feita com o Swagger
 
 ## Lançamento
 O model tem os atributos:
+- Id
+- Id da Conta do Usuário
 - Número da conta do usuário
 - Data
 - Valor
-- Tipo ([TipoLancamento Enum](#tipolancamento-enum))
 - Descrição
+- Tipo ([TipoLancamento Enum](#tipolancamento-enum))
 - Número da conta de destino (para o caso de transferência)
 
 Tem os getters e setter dos atributos.
 
 O service faz as validações para criação do lançamento.
-- O número da conta, valor, descricao, tipo e plano de conta (categoria) não podem ser nulos.
+- O Id da conta do Usuário, número da conta, valor, descricao, tipo e plano de conta (categoria) não podem ser nulos.
 - O valor não pode ser negativo.
 - Se for transferência a conta de destino não pode ser nula.
 - O número da conta do usuário e de destino devem ser de contas já cadastradas no sistema.
 - Caso seja um débito ou uma transferência o valor não deve deixar o saldo negativo.
+- No caso de um crédtio, o valor passado será adicionado ao saldo da conta.
+- No caso de um débito, o valor passado será subtraido do saldo da conta.
+- No caso de uma transferência, o valor passado será subtraido do saldo da conta do usuário e adicionado no saldo da conta do destinatário, e será criado dois lançamentos um em cada conta.
 
-Também faz a colsulta do extrato por duas datas passadas. Onde a data de fim deve ser posterior da data de inicio e não podem ser nulas.
+O Controller mapeia as rotas da API, que podem ser vistas com mais detalhes na [documentação](https://accountbank-api.herokuapp.com/swagger-ui.html) feita com o Swagger
 
 ## Plano Conta (Categoria)
 O model tem os atributos:
+- Id
 - Tipo ([TipoPlanoConta Enum](#tipoplanoconta-enum))
 - Descrição
+- Id Usuário
 
 Tem os getters e setter dos atributos.
 
 O service faz as validações para criação do plano conta.
-- A descricao e o tipo não podem ser nulos.
+- A descricao, o tipo e o Id do usuário não podem ser nulos.
+
+O Controller mapeia as rotas da API, que podem ser vistas com mais detalhes na [documentação](https://accountbank-api.herokuapp.com/swagger-ui.html) feita com o Swagger
 
 ## Login
 O service faz a validação do login do usuário no sistema.
 - O login e a senha não podem ser nulos.
 - Busca o usuário pelo login e compara a senha passada com a cadastrada.
+
+O Controller mapeia as rotas da API, que podem ser vistas com mais detalhes na [documentação](https://accountbank-api.herokuapp.com/swagger-ui.html) feita com o Swagger
+
+## Dashboard
+O service faz a busca dos dados necessário no dashboard do sistema.
+Também faz a busca dos lançamentos para o extrato por data de início e fim.
+
+O Controller mapeia as rotas da API, que podem ser vistas com mais detalhes na [documentação](https://accountbank-api.herokuapp.com/swagger-ui.html) feita com o Swagger
 
 ## TipoConta Enum
 - CORRENTE
@@ -160,8 +191,10 @@ O service faz a validação do login do usuário no sistema.
 - POUPANCA
 
 ## TipoPlanoConta Enum
-- RECEITA
-- DESPESA
+- R: Receita
+- D: Despesa
+- TC: Transferência entre Contas
+- TU: Transferência entre Usuários
 
 ## TipoLancamento Enum
 - DEBITO
