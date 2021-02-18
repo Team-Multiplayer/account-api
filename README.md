@@ -7,7 +7,7 @@ Ajudou no desenvolvimento da modelagem e implementação dos Services, Models, E
 Ajudou no desenvolvimento da modelagem e implementação dos Services, Models, Endpoints e configurações de segurança.
 
 ## Modelagem inicial
-![Diagrama Classes inicial](./Diagrama-Classes-AccountBank.png "Diagrama de Classes inicial")
+![Diagrama Classes inicial](.images/Diagrama-Classes-AccountBank.png "Diagrama de Classes inicial")
 
 ## Estrutura do Projeto
 Dividimos as classes em pacotes de acordo com suas responsabilidades.
@@ -18,27 +18,75 @@ Dividimos as classes em pacotes de acordo com suas responsabilidades.
 
 ```
 📦src
- ┗ 📂main
-   ┗ 📂java
-     ┗ 📂com.multiplayer.projetoaccountjpa
-       ┣ 📂enums
-       ┃ ┣ 📜TipoConta.java
-       ┃ ┣ 📜TipoLancamento.java
-       ┃ ┗ 📜TipoPlanoConta.java
-       ┣ 📂exception
-       ┃ ┣ 📜LoginJaCadastradoException.java
-       ┃ ┗ 📜SaldoInsuficienteException.java
-       ┣ 📂model
-       ┃ ┣ 📜Conta.java
-       ┃ ┣ 📜Lancamento.java
-       ┃ ┣ 📜PlanoConta.java
-       ┃ ┗ 📜Usuario.java
-       ┗ 📂service
-         ┣ 📜LancamentoService.java
-         ┣ 📜LoginService.java
-         ┣ 📜PlanoContaService.java
-         ┗ 📜UsuarioService.java
-```
+ ┣ 📂main
+ ┃ ┣ 📂java
+ ┃ ┃ ┗ 📂br
+ ┃ ┃ ┃ ┗ 📂multiplayer
+ ┃ ┃ ┃ ┃ ┗ 📂accountapi
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂configuration
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜JWTAuthorizationFilter.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜JWTConstants.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SecurityConfig.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ContaController.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜DashboardController.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LancamentoController.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LoginController.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PlanoContaController.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UsuarioController.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂doc
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SwaggerConfig.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ContaDto.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜DashboardDto.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ExtratoDto.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ExtratoRequestDto.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LancamentoDto.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LoginDto.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PlanoContaDto.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SessaoDto.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserDto.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂enums
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜TipoConta.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜TipoLancamento.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜TipoPlanoConta.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂exception
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LoginJaCadastradoException.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LoginOuSenhaInvalidosException.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SaldoInsuficienteException.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂model
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Conta.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Lancamento.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PlanoConta.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜Usuario.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ContaRepository.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LancamentoRepository.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PlanoContaRepository.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UsuarioRepository.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂service
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ContaService.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜DashboardService.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LancamentoService.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LoginService.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜PlanoContaService.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UsuarioService.java
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜ProjetoAccountJpaApplication.java
+ ┃ ┗ 📂resources
+ ┃ ┃ ┣ 📂META-INF
+ ┃ ┃ ┃ ┗ 📜additional-spring-configuration-metadata.json
+ ┃ ┃ ┗ 📜application.properties
+ ┗ 📂test
+ ┃ ┗ 📂java
+ ┃ ┃ ┗ 📂br
+ ┃ ┃ ┃ ┗ 📂multiplayer
+ ┃ ┃ ┃ ┃ ┗ 📂accountapi
+ ┃ ┃ ┃ ┃ ┃ ┗ 📂test
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CadastroTest.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LancamentoTest.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LoginTest.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ProjetoAccountJpaApplicationTests.java
+ ```
 
 ## Usuário
 O model tem os atributos:
@@ -122,7 +170,7 @@ O service faz a validação do login do usuário no sistema.
 
 
 # SPRING BOOT
-- A API será um Bankline com funcionalidades específicas, hospedada no Swagger 
+- A API será um Bankline com funcionalidades específicas, hospedada no Swagger
 para apresentação do projeto final e posteriores checagens realizadas por terceiros.
 
 ## Funcionalidades da API
@@ -138,35 +186,35 @@ para apresentação do projeto final e posteriores checagens realizadas por terc
 - Transferência
 - Listagem de transações
 
-#Implementações de segurança
-A api faz uso de Jason Web Token (JWT) para autenticação de endpoints durante o uso 
+# Implementações de segurança
+A api faz uso de Jason Web Token (JWT) para autenticação de endpoints durante o uso
 da mesma além do Spring Security para configurações internas de BackEnd.
 
 # Como funciona?
 
-Ao criar o usuário, o sistema de login fica disponível, habilitando o acesso pelo 
-endpoint 
+Ao criar o usuário, o sistema de login fica disponível, habilitando o acesso pelo
+endpoint
 
 ![Imagem Insomnia](./images/login-endpoint.jpg "Imagem Insomnia")
 
 
-Após o login o endpoint retornará uma resposta contendo os dados de autenticação, 
-contendo um token bearer que será filtrado pela implemetação do JWT no Java, o que 
+Após o login o endpoint retornará uma resposta contendo os dados de autenticação,
+contendo um token bearer que será filtrado pela implemetação do JWT no Java, o que
 permitirá o acesso as demais funcionalidades.
 
 ## Utilizando as transações
 
 Para realizar uma transação, a requisição deverá ser feita no endpoint "/lancamentos".
 
-Para se alternar entre os diferentes tipos de transações foi implementado um 
-sistema de Enum em que fica disponível para o usuário as opções de: Débito, Crédito 
-e Transferência. Para alternar, o usuário deve mudar o valor do campo "tipo". Dependendo 
+Para se alternar entre os diferentes tipos de transações foi implementado um
+sistema de Enum em que fica disponível para o usuário as opções de: Débito, Crédito
+e Transferência. Para alternar, o usuário deve mudar o valor do campo "tipo". Dependendo
 da opção, a conta destino terá o saldo alterado.
 
 ## Demonstração de uma transação
 
-Listamos os usuários para ver as possíveis conexões durante uma transação. 
-Nota-se que o JWT já está sendo requisitado. 
+Listamos os usuários para ver as possíveis conexões durante uma transação.
+Nota-se que o JWT já está sendo requisitado.
 
 ![Imagem Insomnia](./images/listagem-usuarios.jpg "Imagem insomnia")
 
@@ -174,16 +222,16 @@ requisitamos o endpoint de "/contas" para checar o saldo inicial.
 
 ![Imagem Insomnia](./images/checagem-contas.jpg "Imagem Insomnia")
 
-Preparamos o corpo da requisição e enviamos a transação colocando o id da conta que 
-desejamos creditar, o campo contaDestino só tera relevância caso a transação seja "Transferência", 
+Preparamos o corpo da requisição e enviamos a transação colocando o id da conta que
+desejamos creditar, o campo contaDestino só tera relevância caso a transação seja "Transferência",
 neste caso deixaremos vazio.
 
 ![Imagem Insomnia](./images/lancamento-endpoint.jpg "Imagem Insomnia")
 
-Tendo sucesso no envio, requisitamos o endpoint referente as contas de um usuário 
+Tendo sucesso no envio, requisitamos o endpoint referente as contas de um usuário
 para checagem do saldo novamente.
 
 ![Imagem Insomnia](./images/checagem-contas-final.jpg "Imagem Insomnia")
 
-Por fim percebe-se que a conta foi creditada e todas as operações foram realizadas 
+Por fim percebe-se que a conta foi creditada e todas as operações foram realizadas
 apenas por causa da autenticação do JWT.
